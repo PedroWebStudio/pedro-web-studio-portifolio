@@ -126,7 +126,7 @@ export default function ContactEmailModal({
                   type="tel"
                   inputMode="tel"
                   autoComplete="tel"
-                  placeholder="(11) 99999-9999"
+                  placeholder="(11) 98954-5870"
                   className={fieldClassName}
                 />
               </label>

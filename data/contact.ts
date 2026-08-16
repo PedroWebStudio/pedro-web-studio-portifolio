@@ -1,6 +1,6 @@
 export const contact = {
-  email: "contato@pedrowebstudio.com.br",
-  whatsappNumber: "5511999999999",
+  email: "contatopedrowebstudio@gmail.com",
+  whatsappNumber: "5511989545870",
   whatsappMessage:
     "Olá Pedro! Tenho um projeto em mente e gostaria de conversar.",
 };
