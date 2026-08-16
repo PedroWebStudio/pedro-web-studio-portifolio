@@ -2,60 +2,54 @@ import ScaledShell from "./ScaledShell";
 
 export default function NobrePreview() {
   return (
-    <ScaledShell bg="#F4F5F2">
-      <div className="flex items-center justify-between border-b border-[#101820]/10 bg-[#F4F5F2] px-8 py-4">
+    <ScaledShell bg="#101820">
+      <div className="flex items-center justify-between border-b border-white/10 px-8 py-4 text-white">
         <div className="flex items-center gap-3">
-          <span className="flex h-8 w-8 items-center justify-center bg-[#101820] text-xs font-bold text-white">
+          <span className="flex h-8 w-8 items-center justify-center bg-[#F05A28] text-xs font-bold">
             N
           </span>
-          <span className="text-sm font-bold tracking-tight text-[#101820]">
-            NOBRE <span className="font-normal">ENGENHARIA</span>
+          <span className="text-sm font-bold tracking-tight">
+            NOBRE <span className="font-normal text-white/50">ENGENHARIA</span>
           </span>
         </div>
-        <span className="bg-[#F05A28] px-3 py-2 text-[9px] font-bold uppercase tracking-wider text-white">
-          Fale conosco
+        <span className="bg-[#F05A28] px-3 py-2 text-[9px] font-bold uppercase tracking-wider">
+          Briefing
         </span>
       </div>
 
-      <div className="grid flex-1 grid-cols-[1.1fr_0.9fr] gap-8 bg-[#101820] px-8 py-10 text-white">
-        <div className="flex flex-col justify-center">
-          <div className="mb-4 flex items-center gap-2">
-            <span className="h-2 w-2 bg-[#F05A28]" />
-            <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-white/50">
-              Engenharia & construção
-            </span>
-          </div>
-          <h3 className="text-[40px] font-bold leading-[0.92] tracking-[-0.04em]">
-            Projetamos
+      <div className="relative flex flex-1 flex-col justify-end overflow-hidden px-8 pb-12 pt-16 text-white">
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              "linear-gradient(160deg, #1a2835 0%, #0c1218 45%, #101820 100%), radial-gradient(ellipse at 70% 20%, rgba(240,90,40,0.35), transparent 55%)",
+          }}
+        />
+        <div
+          className="absolute inset-0 opacity-40"
+          style={{
+            backgroundImage:
+              "linear-gradient(rgba(240,90,40,0.12) 1px, transparent 1px), linear-gradient(90deg, rgba(240,90,40,0.12) 1px, transparent 1px)",
+            backgroundSize: "36px 40px",
+          }}
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#101820] via-[#101820]/50 to-transparent" />
+        <div className="relative z-10">
+          <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-[#F05A28]">
+            Engenharia de precisão
+          </p>
+          <h3 className="mt-4 text-[44px] font-bold leading-[0.95]">
+            Obra complexa.
             <br />
-            espaços que
-            <br />
-            <span className="text-[#F05A28]">transformam.</span>
+            Controle total.
           </h3>
-          <div className="mt-6 flex gap-3">
-            <span className="bg-[#F05A28] px-4 py-2.5 text-[11px] font-bold">
-              Ver projetos →
-            </span>
-            <span className="border border-white/20 px-4 py-2.5 text-[11px]">
-              Conheça a Nobre
-            </span>
+          <div className="mt-8 grid grid-cols-4 gap-px bg-white/10">
+            {["240+", "18", "96%", "3"].map((n) => (
+              <div key={n} className="bg-[#101820]/90 px-3 py-3 backdrop-blur">
+                <p className="text-xl font-bold text-[#F05A28]">{n}</p>
+              </div>
+            ))}
           </div>
-        </div>
-
-        <div className="border border-white/10 bg-[#16242E] p-4">
-          <div className="mb-3 flex justify-between text-[10px] text-white/40">
-            <span>Projeto em destaque</span>
-            <span className="text-[#F05A28]">2026</span>
-          </div>
-          <div className="relative h-[200px] bg-[#24343E]">
-            <div className="absolute inset-x-8 bottom-0 h-[75%] border border-white/10 bg-[#1B2B35]" />
-            <div className="absolute bottom-0 left-1/2 h-[90%] w-px -translate-x-1/2 bg-[#F05A28]/50" />
-            <span className="absolute bottom-4 right-4 text-5xl font-bold text-white/10">
-              01
-            </span>
-          </div>
-          <p className="mt-3 text-sm font-bold">Residencial Aurora</p>
-          <p className="text-[10px] text-white/40">São Paulo · SP</p>
         </div>
       </div>
     </ScaledShell>

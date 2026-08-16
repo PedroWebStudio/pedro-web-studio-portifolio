@@ -1,41 +1,329 @@
 "use client";
 
-import { motion, AnimatePresence } from "framer-motion";
+import { AnimatePresence, motion, useScroll, useTransform } from "framer-motion";
 import { Cormorant_Garamond, Manrope } from "next/font/google";
+import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import {
+  FormEvent,
+  useEffect,
+  useId,
+  useRef,
+  useState,
+} from "react";
 
-const cormorant = Cormorant_Garamond({
+const display = Cormorant_Garamond({
   subsets: ["latin"],
-  variable: "--font-cormorant",
+  weight: ["400", "500", "600"],
+  variable: "--font-mrs-display",
 });
 
-const manrope = Manrope({
+const sans = Manrope({
   subsets: ["latin"],
-  variable: "--font-manrope-almeida",
+  variable: "--font-mrs-sans",
 });
+
+const aboutPoints = [
+  "Advogada especializada em Direito do Trabalho",
+  "Atuação exclusiva em processos trabalhistas",
+  "Defesa de direitos em rescisões e verbas salariais",
+  "Acompanhamento próximo em todas as fases do processo",
+  "Linguagem clara e estratégia alinhada ao seu caso",
+];
+
+const areas = [
+  {
+    n: "I",
+    title: "Rescisão e verbas",
+    text: "Cobrança de direitos em demissões, avisos e valores devidos.",
+  },
+  {
+    n: "II",
+    title: "Horas extras",
+    text: "Reconhecimento de jornadas irregulares e pagamentos omitidos.",
+  },
+  {
+    n: "III",
+    title: "Assédio e danos",
+    text: "Proteção da dignidade no ambiente de trabalho e reparação.",
+  },
+  {
+    n: "IV",
+    title: "FGTS e benefícios",
+    text: "Regularização de depósitos, estabilidade e benefícios legais.",
+  },
+];
+
+const situations = [
+  {
+    title: "Fui demitido e não recebi tudo",
+    text: "Verbas rescisórias incompletas, atrasos ou valores que não fecham com o contrato.",
+  },
+  {
+    title: "Faço hora extra sem receber",
+    text: "Jornada além do combinado, banco de horas irregular ou pagamento parcial.",
+  },
+  {
+    title: "Sofro pressão ou assédio no trabalho",
+    text: "Ambiente hostil, humilhações ou situações que afetam saúde e dignidade.",
+  },
+  {
+    title: "Meus direitos não estão sendo respeitados",
+    text: "FGTS, férias, adicional, estabilidade ou qualquer irregularidade na relação de emprego.",
+  },
+];
+
+const steps = [
+  {
+    n: "01",
+    title: "Conversa inicial",
+    text: "Você conta o que aconteceu. Eu escuto com atenção e identifico os pontos jurídicos centrais.",
+  },
+  {
+    n: "02",
+    title: "Análise do caso",
+    text: "Documentos, prazos e provas são avaliados para montar a estratégia mais adequada.",
+  },
+  {
+    n: "03",
+    title: "Proposta clara",
+    text: "Você recebe um caminho objetivo: o que cabe, o que esperar e como seguiremos.",
+  },
+  {
+    n: "04",
+    title: "Acompanhamento",
+    text: "Do protocolo à audiência, cada etapa é comunicada com transparência.",
+  },
+];
+
+const faqs = [
+  {
+    q: "Atende só processos trabalhistas?",
+    a: "Sim. A atuação é exclusiva em Direito do Trabalho — foco total no que realmente importa para o seu caso.",
+  },
+  {
+    q: "Preciso ter todos os documentos prontos?",
+    a: "Não. Na conversa inicial já orientamos o que reunir. Holerites, contrato, mensagens e comprovantes ajudam, mas começamos mesmo sem o pacote completo.",
+  },
+  {
+    q: "Quanto tempo leva um processo?",
+    a: "Depende da complexidade e da vara. O que posso garantir é acompanhamento contínuo e comunicação clara em cada fase.",
+  },
+  {
+    q: "Posso conversar antes de decidir?",
+    a: "Sim. O primeiro contato serve para entender a situação e avaliar se há caminho jurídico — sem compromisso precipitado.",
+  },
+];
+
+const nav = [
+  { href: "#trajetoria", label: "Sobre" },
+  { href: "#atuacao", label: "Atuação" },
+  { href: "#como-funciona", label: "Como funciona" },
+];
+
+const fieldClass =
+  "mt-2 w-full border border-white/15 bg-white/5 px-4 py-3 text-sm text-white outline-none transition placeholder:text-white/30 focus:border-[#D4AF37]";
+
+function ContactModal({
+  open,
+  onClose,
+}: {
+  open: boolean;
+  onClose: () => void;
+}) {
+  const titleId = useId();
+
+  useEffect(() => {
+    if (!open) return;
+    const previous = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    function onKeyDown(event: KeyboardEvent) {
+      if (event.key === "Escape") onClose();
+    }
+
+    window.addEventListener("keydown", onKeyDown);
+    return () => {
+      document.body.style.overflow = previous;
+      window.removeEventListener("keydown", onKeyDown);
+    };
+  }, [open, onClose]);
+
+  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    onClose();
+  }
+
+  return (
+    <AnimatePresence>
+      {open && (
+        <motion.div
+          className="fixed inset-0 z-[60] flex items-end justify-center p-4 sm:items-center"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+        >
+          <button
+            type="button"
+            aria-label="Fechar"
+            className="absolute inset-0 bg-black/70 backdrop-blur-sm"
+            onClick={onClose}
+          />
+
+          <motion.div
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby={titleId}
+            initial={{ opacity: 0, y: 24, scale: 0.98 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 16, scale: 0.98 }}
+            transition={{ duration: 0.25 }}
+            className="relative z-10 max-h-[90vh] w-full max-w-lg overflow-y-auto border border-white/10 bg-[#5A0B22] shadow-2xl"
+          >
+            <div className="flex items-start justify-between border-b border-white/10 px-6 py-5">
+              <div>
+                <p className="text-[10px] font-medium uppercase tracking-[0.28em] text-[#D4AF37]">
+                  Contato
+                </p>
+                <h2
+                  id={titleId}
+                  className="mt-2 font-[family-name:var(--font-mrs-display)] text-2xl text-white"
+                >
+                  Fale comigo
+                </h2>
+              </div>
+              <button
+                type="button"
+                onClick={onClose}
+                className="border border-white/20 px-3 py-1 text-xs uppercase tracking-wider text-white/60 transition hover:border-[#D4AF37] hover:text-[#D4AF37]"
+              >
+                Fechar
+              </button>
+            </div>
+
+            <form onSubmit={handleSubmit} className="space-y-4 px-6 py-6">
+              <label className="block text-left">
+                <span className="text-xs font-medium uppercase tracking-[0.16em] text-white/70">
+                  Nome completo
+                </span>
+                <input
+                  required
+                  name="name"
+                  type="text"
+                  autoComplete="name"
+                  placeholder="Seu nome"
+                  className={fieldClass}
+                />
+              </label>
+
+              <label className="block text-left">
+                <span className="text-xs font-medium uppercase tracking-[0.16em] text-white/70">
+                  Telefone / WhatsApp
+                </span>
+                <input
+                  required
+                  name="phone"
+                  type="tel"
+                  inputMode="tel"
+                  autoComplete="tel"
+                  placeholder="(11) 99999-9999"
+                  className={fieldClass}
+                />
+              </label>
+
+              <label className="block text-left">
+                <span className="text-xs font-medium uppercase tracking-[0.16em] text-white/70">
+                  E-mail
+                </span>
+                <input
+                  required
+                  name="email"
+                  type="email"
+                  autoComplete="email"
+                  placeholder="seu@email.com"
+                  className={fieldClass}
+                />
+              </label>
+
+              <label className="block text-left">
+                <span className="text-xs font-medium uppercase tracking-[0.16em] text-white/70">
+                  Assunto
+                </span>
+                <input
+                  required
+                  name="subject"
+                  type="text"
+                  placeholder="Ex.: rescisão, horas extras..."
+                  className={fieldClass}
+                />
+              </label>
+
+              <label className="block text-left">
+                <span className="text-xs font-medium uppercase tracking-[0.16em] text-white/70">
+                  Mensagem
+                </span>
+                <textarea
+                  required
+                  name="message"
+                  rows={4}
+                  placeholder="Conte brevemente a sua situação"
+                  className={`${fieldClass} resize-y`}
+                />
+              </label>
+
+              <div className="flex flex-col-reverse gap-3 pt-2 sm:flex-row sm:justify-end">
+                <button
+                  type="button"
+                  onClick={onClose}
+                  className="inline-flex h-11 items-center justify-center border border-white/25 px-5 text-xs uppercase tracking-[0.16em] text-white/70 transition hover:border-white/50 hover:text-white"
+                >
+                  Cancelar
+                </button>
+                <button
+                  type="submit"
+                  className="inline-flex h-11 items-center justify-center bg-[#D4AF37] px-6 text-xs font-semibold uppercase tracking-[0.16em] text-[#5A0B22] transition hover:bg-white"
+                >
+                  Enviar
+                </button>
+              </div>
+            </form>
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
+}
 
 export default function AlmeidaAdvocacia() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [contactOpen, setContactOpen] = useState(false);
+  const heroRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: heroRef,
+    offset: ["start start", "end start"],
+  });
+  const logoY = useTransform(scrollYProgress, [0, 1], [0, -80]);
+  const logoOpacity = useTransform(scrollYProgress, [0, 0.7], [1, 0.15]);
+  const veil = useTransform(scrollYProgress, [0, 1], [0, 0.45]);
+
+  function openContact() {
+    setMenuOpen(false);
+    setContactOpen(true);
+  }
 
   return (
     <main
-      className={`${cormorant.variable} ${manrope.variable} min-h-screen bg-[#F8F7F4] text-[#17202A]`}
-      style={{ fontFamily: "var(--font-manrope-almeida)" }}
+      className={`${display.variable} ${sans.variable} min-h-screen bg-[#F7F4F2] text-[#2C181E]`}
+      style={{ fontFamily: "var(--font-mrs-sans)" }}
     >
-      {/* BARRA DA DEMONSTRAÇÃO */}
-
-      <div className="fixed bottom-5 left-1/2 z-50 flex max-w-[calc(100%-2rem)] -translate-x-1/2 items-center gap-2 rounded-full border border-[#0B1F33]/10 bg-white/90 p-1.5 shadow-lg backdrop-blur">
-        <div className="hidden px-4 py-2 text-xs text-[#17202A]/60 sm:block">
+      <div className="fixed bottom-5 left-1/2 z-50 flex max-w-[calc(100%-2rem)] -translate-x-1/2 items-center gap-2 rounded-full border border-black/8 bg-white/90 p-1.5 shadow-lg backdrop-blur">
+        <div className="hidden px-4 py-2 text-xs text-black/50 sm:block">
           Demonstração desenvolvida por{" "}
-          <span className="font-semibold text-[#0B1F33]">
-            Pedro Web Studio
-          </span>
+          <span className="font-semibold text-[#5A0B22]">Pedro Web Studio</span>
         </div>
-
         <Link
           href="/"
-          className="group flex items-center gap-2 rounded-full bg-[#0B1F33] px-4 py-2 text-xs font-semibold text-white transition hover:bg-[#B89B5E]"
+          className="group flex items-center gap-2 rounded-full bg-[#5A0B22] px-4 py-2 text-xs font-semibold text-white transition hover:bg-[#B8953D]"
         >
           <span className="transition-transform group-hover:-translate-x-1">
             ←
@@ -44,260 +332,397 @@ export default function AlmeidaAdvocacia() {
         </Link>
       </div>
 
-      {/* NAVBAR */}
-
-      <header className="border-b border-[#0B1F33]/10">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5 lg:px-8">
-          <a
-            href="#"
-            className="font-[family-name:var(--font-cormorant)] text-2xl font-semibold text-[#0B1F33]"
-          >
-            Almeida
-            <span className="ml-1 text-[#B89B5E]">Advocacia</span>
-          </a>
-
-          <nav className="hidden items-center gap-8 text-sm md:flex">
-            {["#escritorio", "#atuacao", "#contato"].map((href, i) => (
-              <a key={href} href={href} className="transition hover:text-[#B89B5E]">
-                {["O escritório", "Áreas de atuação", "Contato"][i]}
+      {/* NAV — linha fina, marca no centro */}
+      <header className="absolute inset-x-0 top-0 z-40">
+        <div className="mx-auto grid max-w-6xl grid-cols-[1fr_auto_1fr] items-center px-6 py-6 lg:px-8">
+          <nav className="hidden items-center gap-6 lg:flex">
+            {nav.map((item) => (
+              <a
+                key={item.href}
+                href={item.href}
+                className="text-[10px] font-medium uppercase tracking-[0.22em] text-white/55 transition hover:text-[#D4AF37]"
+              >
+                {item.label}
               </a>
             ))}
           </nav>
 
-          <a
-            href="#contato"
-            className="hidden border border-[#0B1F33] px-5 py-3 text-xs font-semibold uppercase tracking-wider transition hover:bg-[#0B1F33] hover:text-white lg:block"
-          >
-            Fale conosco
+          <a href="#" className="justify-self-center md:hidden">
+            <span className="font-[family-name:var(--font-mrs-display)] text-lg tracking-wide text-[#D4AF37]">
+              MS
+            </span>
           </a>
 
-          <button
-            onClick={() => setMenuOpen((v) => !v)}
-            className="flex flex-col items-center justify-center gap-1.5 md:hidden"
-            aria-label="Menu"
-          >
-            <motion.span animate={menuOpen ? { rotate: 45, y: 7 } : { rotate: 0, y: 0 }} className="block h-px w-6 bg-[#0B1F33] origin-center" />
-            <motion.span animate={menuOpen ? { opacity: 0 } : { opacity: 1 }} className="block h-px w-6 bg-[#0B1F33]" />
-            <motion.span animate={menuOpen ? { rotate: -45, y: -7 } : { rotate: 0, y: 0 }} className="block h-px w-6 bg-[#0B1F33] origin-center" />
-          </button>
+          <div className="hidden justify-self-center md:block" aria-hidden />
+
+          <div className="flex items-center justify-end gap-4">
+            <button
+              type="button"
+              onClick={openContact}
+              className="hidden text-[10px] font-semibold uppercase tracking-[0.28em] text-[#D4AF37] transition hover:text-white md:inline"
+            >
+              Contato
+            </button>
+            <button
+              type="button"
+              onClick={() => setMenuOpen((v) => !v)}
+              className="flex flex-col gap-1.5 md:hidden"
+              aria-label="Menu"
+            >
+              <span className="block h-px w-6 bg-white" />
+              <span className="block h-px w-6 bg-white" />
+              <span className="block h-px w-6 bg-white" />
+            </button>
+          </div>
         </div>
 
         <AnimatePresence>
           {menuOpen && (
             <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
-              exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.2 }}
-              className="overflow-hidden border-t border-[#0B1F33]/10 bg-white md:hidden"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="border-t border-white/10 bg-[#5A0B22]/95 px-6 py-4 backdrop-blur md:hidden"
             >
-              <div className="flex flex-col px-6 py-4">
-                {["#escritorio", "#atuacao", "#contato"].map((href, i) => (
-                  <a
-                    key={href}
-                    href={href}
-                    onClick={() => setMenuOpen(false)}
-                    className="py-3 text-sm text-[#17202A] transition hover:text-[#B89B5E]"
-                  >
-                    {["O escritório", "Áreas de atuação", "Contato"][i]}
-                  </a>
-                ))}
+              {nav.map((item) => (
                 <a
-                  href="#contato"
+                  key={item.href}
+                  href={item.href}
                   onClick={() => setMenuOpen(false)}
-                  className="mt-3 border border-[#0B1F33] px-5 py-3 text-center text-xs font-semibold uppercase tracking-wider transition hover:bg-[#0B1F33] hover:text-white"
+                  className="block py-3 text-sm text-white/80"
                 >
-                  Fale conosco
+                  {item.label}
                 </a>
-              </div>
+              ))}
+              <button
+                type="button"
+                onClick={openContact}
+                className="mt-2 block w-full py-3 text-left text-sm text-[#D4AF37]"
+              >
+                Contato
+              </button>
             </motion.div>
           )}
         </AnimatePresence>
       </header>
 
       {/* HERO */}
+      <section
+        ref={heroRef}
+        className="relative flex min-h-[100svh] flex-col items-center justify-center overflow-hidden px-6 pb-20 pt-28 text-center"
+      >
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              "radial-gradient(ellipse 80% 60% at 50% 35%, #6e1230 0%, #5A0B22 48%, #2f0612 100%)",
+          }}
+        />
+        <motion.div
+          className="absolute inset-0 bg-[#1a040c]"
+          style={{ opacity: veil }}
+        />
 
-      <section className="relative overflow-hidden">
-        <div className="mx-auto grid max-w-7xl items-center gap-12 px-6 py-16 sm:py-24 lg:grid-cols-[1.05fr_.95fr] lg:px-8">
+        <motion.div
+          initial={{ scale: 0.85, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1] }}
+          className="pointer-events-none absolute left-1/2 top-[42%] h-[min(78vw,520px)] w-[min(78vw,520px)] -translate-x-1/2 -translate-y-1/2 rounded-full border border-[#D4AF37]/20"
+          aria-hidden
+        />
+        <motion.div
+          initial={{ scale: 0.9, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ duration: 1.6, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+          className="pointer-events-none absolute left-1/2 top-[42%] h-[min(92vw,640px)] w-[min(92vw,640px)] -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/[0.06]"
+          aria-hidden
+        />
+
+        <motion.div
+          style={{ y: logoY, opacity: logoOpacity }}
+          className="relative z-10 flex w-full max-w-3xl flex-col items-center"
+        >
           <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
+            initial={{ opacity: 0, filter: "blur(12px)", scale: 1.06 }}
+            animate={{ opacity: 1, filter: "blur(0px)", scale: 1 }}
+            transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
           >
-            <p className="mb-7 text-xs font-semibold uppercase tracking-[0.3em] text-[#B89B5E]">
-              Advocacia estratégica
-            </p>
+            <Image
+              src="/demonstracoes/almeida-advocacia/logo-ms.png"
+              alt="Miriam Rodrigues Santos — Advocacia Trabalhista"
+              width={985}
+              height={438}
+              priority
+              className="mx-auto h-auto w-[min(88vw,420px)] bg-transparent [mix-blend-mode:lighten]"
+              unoptimized
+            />
+          </motion.div>
 
-            <h1 className="max-w-3xl font-[family-name:var(--font-cormorant)] text-5xl leading-[0.95] text-[#0B1F33] sm:text-7xl lg:text-8xl">
-              Estratégia,
-              <br />
-              experiência e
-              <br />
-              <span className="italic text-[#B89B5E]">confiança.</span>
-            </h1>
+          <motion.p
+            initial={{ opacity: 0, y: 14 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.35 }}
+            className="mt-8 text-[11px] font-medium uppercase tracking-[0.35em] text-[#D4AF37]"
+          >
+            Especialista em Direito do Trabalho
+          </motion.p>
 
-            <p
-              className="mt-8 max-w-xl text-base leading-8 text-[#17202A]/65"
-              style={{
-                fontFamily: "var(--font-manrope-almeida)",
-              }}
+          <motion.h1
+            initial={{ opacity: 0, y: 18 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.45 }}
+            className="mt-5 max-w-2xl font-[family-name:var(--font-mrs-display)] text-3xl leading-[1.15] text-white sm:text-5xl"
+          >
+            Seus direitos trabalhistas,
+            <br />
+            com estratégia e presença.
+          </motion.h1>
+
+          <motion.p
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.55 }}
+            className="mx-auto mt-6 max-w-lg text-sm leading-7 text-white/60"
+          >
+            Atuação exclusiva em processos trabalhistas — rescisões, verbas,
+            horas extras e demais demandas da relação de emprego.
+          </motion.p>
+
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8, delay: 0.65 }}
+            className="mt-8 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-[11px] uppercase tracking-[0.2em] text-white/45"
+          >
+            <span>Rescisão</span>
+            <span className="text-[#D4AF37]/50">·</span>
+            <span>Horas extras</span>
+            <span className="text-[#D4AF37]/50">·</span>
+            <span>Assédio</span>
+            <span className="text-[#D4AF37]/50">·</span>
+            <span>FGTS</span>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.75 }}
+            className="mt-10 flex flex-wrap items-center justify-center gap-4"
+          >
+            <button
+              type="button"
+              onClick={openContact}
+              className="bg-[#D4AF37] px-7 py-3.5 text-[11px] font-semibold uppercase tracking-[0.18em] text-[#5A0B22] transition hover:bg-white"
             >
-              Atuamos de forma estratégica na defesa dos interesses de nossos
-              clientes, combinando experiência jurídica, proximidade e visão de
-              longo prazo.
-            </p>
-
-            <div className="mt-10 flex flex-wrap gap-4">
-              <a
-                href="#contato"
-                className="bg-[#0B1F33] px-7 py-4 text-sm font-semibold text-white transition hover:bg-[#173653]"
-              >
-                Agende uma conversa
-              </a>
-
-              <a
-                href="#atuacao"
-                className="border border-[#0B1F33]/20 px-7 py-4 text-sm font-semibold text-[#0B1F33] transition hover:border-[#B89B5E]"
-              >
-                Conheça nossa atuação
-              </a>
-            </div>
+              Fale comigo
+            </button>
+            <a
+              href="#atuacao"
+              className="border border-white/30 px-7 py-3.5 text-[11px] font-semibold uppercase tracking-[0.18em] text-white transition hover:border-[#D4AF37] hover:text-[#D4AF37]"
+            >
+              Ver atuação
+            </a>
           </motion.div>
 
-          {/* COMPOSIÇÃO VISUAL */}
-
-          <motion.div
-            initial={{ opacity: 0, scale: 0.96 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1, delay: 0.15 }}
-            className="relative"
+          <motion.a
+            href="#trajetoria"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8, delay: 0.95 }}
+            className="mt-14 inline-flex flex-col items-center gap-3 text-[10px] font-medium uppercase tracking-[0.35em] text-white/40 transition hover:text-[#D4AF37]"
           >
-            <div className="absolute -right-10 -top-10 h-40 w-40 rounded-full border border-[#B89B5E]/30" />
-
-            <div className="relative overflow-hidden bg-[#0B1F33]">
-              <div className="flex min-h-[380px] flex-col justify-between p-8 sm:min-h-[520px] sm:p-12">
-                <div className="flex justify-end">
-                  <span className="font-[family-name:var(--font-cormorant)] text-7xl text-[#B89B5E]/30">
-                    A
-                  </span>
-                </div>
-
-                <div>
-                  <div className="mb-6 h-px w-16 bg-[#B89B5E]" />
-
-                  <p className="font-[family-name:var(--font-cormorant)] text-4xl leading-tight text-white sm:text-5xl">
-                    Direito com
-                    <br />
-                    propósito.
-                  </p>
-
-                  <p className="mt-5 max-w-sm text-sm leading-7 text-white/55">
-                    Excelência técnica para decisões que exigem segurança.
-                  </p>
-                </div>
-
-                <div className="flex items-end justify-between">
-                  <span className="text-xs uppercase tracking-[0.25em] text-white/40">
-                    São Paulo · Brasil
-                  </span>
-
-                  <span className="text-4xl text-[#B89B5E]">01</span>
-                </div>
-              </div>
-            </div>
-          </motion.div>
-        </div>
+            Conhecer
+            <span className="h-10 w-px bg-gradient-to-b from-white/40 to-transparent" />
+          </motion.a>
+        </motion.div>
       </section>
 
-      {/* ESCRITÓRIO */}
+      {/* SOBRE — foto à esquerda, trajetória à direita */}
+      <section id="trajetoria" className="grid lg:grid-cols-2">
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.9 }}
+          className="relative min-h-[480px] overflow-hidden bg-[#3d0a18] lg:min-h-[640px]"
+        >
+          <Image
+            src="/demonstracoes/almeida-advocacia/miriam.png"
+            alt="Miriam Rodrigues Santos"
+            fill
+            sizes="(max-width: 1024px) 100vw, 50vw"
+            className="object-cover object-[center_20%]"
+            priority
+          />
+        </motion.div>
 
-      <section id="escritorio" className="bg-white py-16 sm:py-28">
-        <div className="mx-auto grid max-w-7xl gap-10 px-6 lg:grid-cols-2 lg:gap-16 lg:px-8">
-          <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.3em] text-[#B89B5E]">
-              O escritório
-            </p>
+        <motion.div
+          initial={{ opacity: 0, x: 24 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          className="flex flex-col justify-center bg-[#5A0B22] px-8 py-14 text-white sm:px-12 sm:py-20 lg:px-16"
+        >
+          <p className="text-[11px] font-medium uppercase tracking-[0.35em] text-[#D4AF37]">
+            Quem sou eu
+          </p>
 
-            <h2 className="mt-6 font-[family-name:var(--font-cormorant)] text-5xl leading-tight text-[#0B1F33] sm:text-6xl">
-              Uma advocacia
-              <br />
-              próxima e estratégica.
-            </h2>
-          </div>
+          <h2 className="mt-4 font-[family-name:var(--font-mrs-display)] text-4xl leading-tight sm:text-5xl">
+            Miriam Rodrigues Santos
+          </h2>
 
-          <div className="space-y-6 text-sm leading-8 text-[#17202A]/65">
-            <p>
-              A Almeida Advocacia nasceu com o propósito de oferecer uma
-              experiência jurídica baseada em confiança, clareza e excelência.
-            </p>
+          <p className="mt-3 text-[11px] uppercase tracking-[0.22em] text-white/55">
+            Advogada · Direito do Trabalho
+          </p>
 
-            <p>
-              Nosso trabalho combina conhecimento técnico, atendimento próximo e
-              estratégias personalizadas para cada caso.
-            </p>
+          <div className="mt-8 h-px w-16 bg-[#D4AF37]" />
 
-            <p>
-              Mais do que solucionar questões jurídicas, buscamos construir
-              relações duradouras com nossos clientes.
-            </p>
-          </div>
-        </div>
+          <p className="mt-8 text-sm leading-7 text-white/70">
+            Atuo exclusivamente com processos trabalhistas. Meu compromisso é
+            defender os direitos do trabalhador com estratégia, clareza e
+            acompanhamento próximo em cada etapa do processo.
+          </p>
+
+          <ul className="mt-10 space-y-4">
+            {aboutPoints.map((item) => (
+              <li key={item} className="flex gap-3 text-sm leading-6 text-white/85">
+                <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[#D4AF37]" />
+                {item}
+              </li>
+            ))}
+          </ul>
+
+          <a
+            href="https://instagram.com/advmiriam"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-10 inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.28em] text-[#D4AF37] transition hover:text-white"
+          >
+            Instagram · @advmiriam
+          </a>
+        </motion.div>
       </section>
 
-      {/* ATUAÇÃO */}
+      {/* ATUAÇÃO — capítulos empilhados full-width (sem cards) */}
+      <section id="atuacao" className="bg-[#5A0B22]">
+        <div className="border-b border-white/10 px-6 py-14 text-center sm:py-16">
+          <p className="text-[11px] font-medium uppercase tracking-[0.35em] text-[#D4AF37]">
+            Direito do Trabalho
+          </p>
+          <h2 className="mt-4 font-[family-name:var(--font-mrs-display)] text-4xl text-white sm:text-5xl">
+            Processos trabalhistas.
+            <br />
+            Só isso. Com profundidade.
+          </h2>
+        </div>
 
-      <section id="atuacao" className="bg-[#F8F7F4] py-16 sm:py-28">
-        <div className="mx-auto max-w-7xl px-6 lg:px-8">
-          <div className="max-w-2xl">
-            <p className="text-xs font-semibold uppercase tracking-[0.3em] text-[#B89B5E]">
-              Áreas de atuação
-            </p>
-
-            <h2 className="mt-6 font-[family-name:var(--font-cormorant)] text-5xl text-[#0B1F33] sm:text-6xl">
-              Experiência para
-              <br />
-              diferentes desafios.
-            </h2>
-          </div>
-
-          <div className="mt-12 grid gap-px overflow-hidden border border-[#0B1F33]/10 bg-[#0B1F33]/10 sm:grid-cols-2 lg:grid-cols-4">
-            {[
-              {
-                number: "01",
-                title: "Direito Empresarial",
-                text: "Estratégias jurídicas para empresas e negócios.",
-              },
-              {
-                number: "02",
-                title: "Direito Civil",
-                text: "Atuação preventiva e contenciosa.",
-              },
-              {
-                number: "03",
-                title: "Contratos",
-                text: "Segurança jurídica para relações comerciais.",
-              },
-              {
-                number: "04",
-                title: "Consultoria",
-                text: "Orientação jurídica estratégica.",
-              },
-            ].map((area) => (
-              <motion.div
-                key={area.number}
-                whileHover={{ y: -5 }}
-                className="bg-[#F8F7F4] p-8"
-              >
-                <span className="text-xs text-[#B89B5E]">
-                  {area.number}
+        <div>
+          {areas.map((area, index) => (
+            <motion.article
+              key={area.title}
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true, amount: 0.5 }}
+              transition={{ duration: 0.6 }}
+              className="group border-b border-white/10"
+            >
+              <div className="mx-auto grid max-w-5xl items-center gap-4 px-6 py-10 transition duration-500 group-hover:bg-white/[0.03] sm:grid-cols-[5rem_1fr_1.4fr] sm:gap-10 sm:py-12 lg:px-8">
+                <span className="font-[family-name:var(--font-mrs-display)] text-3xl text-[#D4AF37]/70 transition group-hover:text-[#D4AF37]">
+                  {area.n}
                 </span>
-
-                <h3 className="mt-16 font-[family-name:var(--font-cormorant)] text-3xl text-[#0B1F33]">
+                <h3 className="font-[family-name:var(--font-mrs-display)] text-3xl text-white sm:text-4xl">
                   {area.title}
                 </h3>
-
-                <p className="mt-4 text-sm leading-7 text-[#17202A]/55">
+                <p className="text-sm leading-7 text-white/55 sm:text-right">
                   {area.text}
+                </p>
+              </div>
+              <motion.div
+                initial={{ scaleX: 0 }}
+                whileInView={{ scaleX: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8, delay: 0.05 * index }}
+                className="h-px origin-left bg-gradient-to-r from-[#D4AF37]/50 to-transparent"
+              />
+            </motion.article>
+          ))}
+        </div>
+      </section>
+
+      {/* QUANDO PROCURAR */}
+      <section id="quando-procurar" className="bg-[#F7F4F2] py-20 sm:py-28">
+        <div className="mx-auto max-w-5xl px-6 lg:px-8">
+          <div className="max-w-2xl">
+            <p className="text-[11px] font-medium uppercase tracking-[0.35em] text-[#8A6B2E]">
+              Quando procurar
+            </p>
+            <h2 className="mt-4 font-[family-name:var(--font-mrs-display)] text-4xl text-[#5A0B22] sm:text-5xl">
+              Situações em que posso ajudar.
+            </h2>
+            <p className="mt-5 text-sm leading-7 text-[#2C181E]/60">
+              Se alguma dessas realidades faz parte do seu dia a dia, vale uma
+              conversa para entender os seus direitos.
+            </p>
+          </div>
+
+          <div className="mt-14 divide-y divide-[#5A0B22]/10 border-y border-[#5A0B22]/10">
+            {situations.map((item, index) => (
+              <motion.div
+                key={item.title}
+                initial={{ opacity: 0, y: 12 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.45, delay: index * 0.05 }}
+                className="grid gap-3 py-8 sm:grid-cols-[2fr_3fr] sm:gap-10"
+              >
+                <h3 className="font-[family-name:var(--font-mrs-display)] text-2xl text-[#5A0B22] sm:text-3xl">
+                  {item.title}
+                </h3>
+                <p className="text-sm leading-7 text-[#2C181E]/60">{item.text}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* COMO FUNCIONA */}
+      <section
+        id="como-funciona"
+        className="relative overflow-hidden py-20 text-white sm:py-28"
+        style={{
+          background:
+            "radial-gradient(ellipse at 70% 0%, #7a1840 0%, #5A0B22 55%, #3a0716 100%)",
+        }}
+      >
+        <div className="mx-auto max-w-5xl px-6 lg:px-8">
+          <div className="max-w-xl">
+            <p className="text-[11px] font-medium uppercase tracking-[0.35em] text-[#D4AF37]">
+              Como funciona
+            </p>
+            <h2 className="mt-4 font-[family-name:var(--font-mrs-display)] text-4xl sm:text-5xl">
+              Do primeiro contato
+              <br />
+              ao acompanhamento.
+            </h2>
+          </div>
+
+          <div className="mt-16 grid gap-10 sm:grid-cols-2 lg:gap-x-14 lg:gap-y-16">
+            {steps.map((step, index) => (
+              <motion.div
+                key={step.n}
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: index * 0.08 }}
+              >
+                <p className="text-xs tracking-[0.28em] text-[#D4AF37]">
+                  {step.n}
+                </p>
+                <h3 className="mt-3 font-[family-name:var(--font-mrs-display)] text-3xl">
+                  {step.title}
+                </h3>
+                <p className="mt-3 max-w-sm text-sm leading-7 text-white/60">
+                  {step.text}
                 </p>
               </motion.div>
             ))}
@@ -305,42 +730,159 @@ export default function AlmeidaAdvocacia() {
         </div>
       </section>
 
-      {/* CTA */}
-
-      <section id="contato" className="bg-[#0B1F33] py-16 text-white sm:py-28">
-        <div className="mx-auto max-w-5xl px-6 text-center lg:px-8">
-          <p className="text-xs font-semibold uppercase tracking-[0.3em] text-[#B89B5E]">
-            Vamos conversar
-          </p>
-
-          <h2 className="mt-6 font-[family-name:var(--font-cormorant)] text-5xl sm:text-6xl lg:text-7xl">
-            Seu caso merece
-            <br />
-            uma estratégia.
-          </h2>
-
-          <p className="mx-auto mt-7 max-w-xl text-sm leading-7 text-white/55">
-            Entre em contato com nossa equipe e descubra como podemos ajudar.
-          </p>
-
-          <a
-            href="mailto:contato@almeidaadvocacia.com.br"
-            className="mt-10 inline-block bg-[#B89B5E] px-8 py-4 text-sm font-semibold text-[#0B1F33] transition hover:bg-white"
+      {/* COMPROMISSO */}
+      <section className="bg-white py-20 sm:py-28">
+        <div className="mx-auto max-w-3xl px-6 text-center lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7 }}
           >
-            Entrar em contato
-          </a>
+            <p className="text-[11px] font-medium uppercase tracking-[0.35em] text-[#8A6B2E]">
+              Compromisso
+            </p>
+            <h2 className="mt-5 font-[family-name:var(--font-mrs-display)] text-4xl leading-tight text-[#5A0B22] sm:text-5xl">
+              Especialização real.
+              <br />
+              Atendimento humano.
+            </h2>
+            <div className="mx-auto mt-8 h-px w-20 bg-[#D4AF37]" />
+            <p className="mx-auto mt-8 max-w-xl text-[15px] leading-8 text-[#2C181E]/65">
+              Não diluo a prática em várias áreas. Ao concentrar a atuação em
+              processos trabalhistas, cada análise ganha profundidade — e você
+              ganha uma condução mais segura, clara e próxima.
+            </p>
+            <div className="mx-auto mt-12 grid max-w-2xl gap-8 text-left sm:grid-cols-3 sm:gap-6">
+              {[
+                ["Foco", "Somente trabalhista"],
+                ["Clareza", "Linguagem acessível"],
+                ["Presença", "Acompanhamento próximo"],
+              ].map(([title, text]) => (
+                <div key={title} className="border-t border-[#5A0B22]/15 pt-4">
+                  <p className="font-[family-name:var(--font-mrs-display)] text-2xl text-[#5A0B22]">
+                    {title}
+                  </p>
+                  <p className="mt-2 text-sm text-[#2C181E]/55">{text}</p>
+                </div>
+              ))}
+            </div>
+          </motion.div>
         </div>
       </section>
 
-      {/* FOOTER */}
+      {/* FAQ */}
+      <section id="duvidas" className="bg-[#F7F4F2] py-20 sm:py-28">
+        <div className="mx-auto max-w-3xl px-6 lg:px-8">
+          <div className="text-center">
+            <p className="text-[11px] font-medium uppercase tracking-[0.35em] text-[#8A6B2E]">
+              Dúvidas frequentes
+            </p>
+            <h2 className="mt-4 font-[family-name:var(--font-mrs-display)] text-4xl text-[#5A0B22] sm:text-5xl">
+              Perguntas que costumam surgir.
+            </h2>
+          </div>
 
-      <footer className="bg-[#071521] py-8 text-white/40">
-        <div className="mx-auto flex max-w-7xl flex-col justify-between gap-4 px-6 text-xs sm:flex-row lg:px-8">
-          <span>© {new Date().getFullYear()} Almeida Advocacia</span>
+          <div className="mt-14 divide-y divide-[#5A0B22]/10 border-y border-[#5A0B22]/10">
+            {faqs.map((item, index) => (
+              <motion.details
+                key={item.q}
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: index * 0.05 }}
+                className="group py-6"
+              >
+                <summary className="flex cursor-pointer list-none items-start justify-between gap-4 text-left marker:content-none">
+                  <span className="font-[family-name:var(--font-mrs-display)] text-xl text-[#5A0B22] sm:text-2xl">
+                    {item.q}
+                  </span>
+                  <span className="mt-1 text-[#D4AF37] transition group-open:rotate-45">
+                    +
+                  </span>
+                </summary>
+                <p className="mt-4 max-w-2xl text-sm leading-7 text-[#2C181E]/60">
+                  {item.a}
+                </p>
+              </motion.details>
+            ))}
+          </div>
+        </div>
+      </section>
 
-          <span>Todos os direitos reservados.</span>
+      {/* CONTATO */}
+      <section
+        id="contato"
+        className="relative overflow-hidden py-24 text-white sm:py-32"
+        style={{
+          background:
+            "radial-gradient(ellipse at 30% 0%, #7a1840 0%, #5A0B22 55%, #3a0716 100%)",
+        }}
+      >
+        <p
+          aria-hidden
+          className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 font-[family-name:var(--font-mrs-display)] text-[38vw] leading-none text-white/[0.04] select-none"
+        >
+          MS
+        </p>
+
+        <div className="relative z-10 mx-auto max-w-3xl px-6 text-center lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, filter: "blur(8px)" }}
+            whileInView={{ opacity: 1, filter: "blur(0px)" }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.9 }}
+          >
+            <Image
+              src="/demonstracoes/almeida-advocacia/logo-ms.png"
+              alt=""
+              width={200}
+              height={90}
+              className="mx-auto h-auto w-36 bg-transparent [mix-blend-mode:lighten]"
+              unoptimized
+            />
+            <h2 className="mt-10 font-[family-name:var(--font-mrs-display)] text-4xl sm:text-5xl md:text-6xl">
+              Vamos conversar.
+            </h2>
+            <p className="mx-auto mt-6 max-w-md text-sm leading-7 text-white/60">
+              Conte um pouco da sua situação trabalhista. Retorno com atenção e
+              objetividade.
+            </p>
+
+            <div className="mt-12 flex flex-col items-center gap-5">
+              <button
+                type="button"
+                onClick={openContact}
+                className="bg-[#D4AF37] px-10 py-4 text-[11px] font-semibold uppercase tracking-[0.22em] text-[#5A0B22] transition hover:bg-white"
+              >
+                Enviar mensagem
+              </button>
+              <a
+                href="tel:+5511999999999"
+                className="text-sm tracking-wide text-white/70 transition hover:text-[#D4AF37]"
+              >
+                (11) 99999-9999
+              </a>
+              <a
+                href="https://instagram.com/advmiriam"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[11px] uppercase tracking-[0.28em] text-[#D4AF37]/80 transition hover:text-white"
+              >
+                @advmiriam
+              </a>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      <footer className="border-t border-white/10 bg-[#3a0716] py-8 text-white/40">
+        <div className="mx-auto flex max-w-5xl flex-col items-center justify-between gap-4 px-6 text-center text-xs sm:flex-row sm:text-left lg:px-8">
+          <p>© {new Date().getFullYear()} Miriam Rodrigues Santos</p>
+          <p className="uppercase tracking-[0.2em]">Advocacia trabalhista</p>
         </div>
       </footer>
+      <ContactModal open={contactOpen} onClose={() => setContactOpen(false)} />
     </main>
   );
 }

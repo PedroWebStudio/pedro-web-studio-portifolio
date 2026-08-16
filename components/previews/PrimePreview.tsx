@@ -2,53 +2,53 @@ import ScaledShell from "./ScaledShell";
 
 export default function PrimePreview() {
   return (
-    <ScaledShell bg="#17202A">
+    <ScaledShell bg="#11151C">
       <div className="flex items-center justify-between border-b border-white/10 px-8 py-5 text-white">
-        <div className="flex items-center gap-3">
+        <div className="flex items-baseline gap-2">
           <span className="text-xl font-semibold">Prime</span>
-          <span className="text-[9px] uppercase tracking-[0.3em] text-white/50">
+          <span className="text-[9px] uppercase tracking-[0.3em] text-[#C6A15B]">
             Imóveis
           </span>
         </div>
-        <span className="border border-white/30 px-3 py-2 text-[9px] font-semibold uppercase tracking-wider">
-          Fale com um consultor
+        <span className="text-[9px] uppercase tracking-wider text-[#C6A15B]">
+          Favoritos
         </span>
       </div>
 
-      <div className="relative flex flex-1 flex-col justify-center px-8 py-10 text-white">
-        <div className="pointer-events-none absolute inset-y-0 right-0 w-[42%] bg-[#24313A]" />
-        <div className="relative max-w-lg">
-          <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#C6A15B]">
-            Imóveis selecionados
+      <div className="relative flex flex-1 flex-col justify-end overflow-hidden px-8 pb-12 pt-16 text-white">
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              "linear-gradient(145deg, #2a3344 0%, #1a2230 40%, #11151C 100%), radial-gradient(ellipse at 80% 30%, rgba(198,161,91,0.28), transparent 50%)",
+          }}
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#11151C] via-[#11151C]/55 to-transparent" />
+        <div
+          className="absolute right-6 top-10 h-40 w-52 opacity-30"
+          style={{
+            background:
+              "linear-gradient(135deg, rgba(244,241,234,0.25), transparent 60%)",
+            clipPath: "polygon(12% 0, 100% 8%, 88% 100%, 0 92%)",
+          }}
+        />
+        <div className="relative z-10">
+          <p className="text-[10px] uppercase tracking-[0.3em] text-[#C6A15B]">
+            Destaque 01 / 03
           </p>
-          <h3 className="mt-4 text-[42px] font-light leading-[0.95]">
-            O endereço
+          <h3 className="mt-3 text-[40px] leading-tight">
+            Apartamento
             <br />
-            certo muda
-            <br />
-            <span className="italic text-[#C6A15B]">tudo.</span>
+            Jardins
           </h3>
-          <div className="mt-6 flex gap-3">
-            <span className="bg-[#C6A15B] px-4 py-2.5 text-[11px] font-semibold text-[#17202A]">
-              Explorar imóveis
-            </span>
-            <span className="border border-white/20 px-4 py-2.5 text-[11px]">
-              Conheça a Prime
-            </span>
-          </div>
-        </div>
-
-        <div className="relative mt-10 grid grid-cols-[1.2fr_1fr_1fr_auto] border border-white/10 bg-white p-2 text-[#17202A]">
-          {["Comprar", "São Paulo", "Todos"].map((item) => (
-            <div key={item} className="border-r border-[#17202A]/10 px-3 py-2">
-              <p className="text-[8px] uppercase tracking-wider text-[#17202A]/40">
-                Campo
-              </p>
-              <p className="mt-1 text-[11px] font-medium">{item}</p>
-            </div>
-          ))}
-          <div className="flex items-center bg-[#17202A] px-4 text-[10px] font-semibold uppercase tracking-wider text-white">
-            Buscar
+          <p className="mt-3 text-[11px] text-white/50">
+            Jardins · 142 m² · 3 dorms
+          </p>
+          <p className="mt-4 text-2xl text-[#C6A15B]">R$ 1.850.000</p>
+          <div className="mt-6 flex gap-2">
+            <span className="h-1.5 w-8 bg-[#C6A15B]" />
+            <span className="h-1.5 w-8 bg-white/20" />
+            <span className="h-1.5 w-8 bg-white/20" />
           </div>
         </div>
       </div>

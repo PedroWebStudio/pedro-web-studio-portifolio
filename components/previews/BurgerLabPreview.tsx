@@ -2,57 +2,61 @@ import ScaledShell from "./ScaledShell";
 
 export default function BurgerLabPreview() {
   return (
-    <ScaledShell bg="#111111">
+    <ScaledShell bg="#0E0E0E">
       <div className="flex items-center justify-between border-b border-white/10 px-8 py-4 text-white">
         <div className="flex items-center gap-2">
-          <span className="flex h-8 w-8 items-center justify-center rounded-md bg-[#F5B942] text-xs font-black text-black">
+          <span className="flex h-8 w-8 items-center justify-center bg-[#F5B942] text-xs font-black text-black">
             BL
           </span>
           <span className="text-xl font-extrabold uppercase tracking-wide">
             Burger Lab
           </span>
         </div>
-        <span className="rounded-md bg-[#F5B942] px-3 py-2 text-[9px] font-black uppercase tracking-wider text-black">
-          Peça agora
+        <span className="rounded-full bg-[#F5B942] px-3 py-2 text-[9px] font-black uppercase text-black">
+          Sacola 2
         </span>
       </div>
 
-      <div className="grid flex-1 grid-cols-2 items-center gap-8 px-8 py-10 text-white">
-        <div>
-          <p className="text-[10px] font-black uppercase tracking-[0.3em] text-[#F5B942]">
-            Smash · Craft · Fire
+      <div className="relative flex flex-1 flex-col justify-end overflow-hidden px-8 pb-12 pt-14 text-white">
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              "linear-gradient(150deg, #2a1f0a 0%, #1a1408 35%, #0E0E0E 100%), radial-gradient(ellipse at 75% 40%, rgba(245,185,66,0.45), transparent 55%)",
+          }}
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-black via-black/70 to-transparent" />
+        <div
+          className="absolute -right-4 top-8 h-48 w-48 rounded-full opacity-40"
+          style={{
+            background:
+              "radial-gradient(circle, rgba(245,185,66,0.55), transparent 70%)",
+          }}
+        />
+        <div className="relative z-10">
+          <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-[#F5B942]">
+            Smash · Craft · Lab
           </p>
-          <h3 className="mt-4 text-[44px] font-extrabold uppercase leading-[0.9]">
+          <h3 className="mt-3 text-[52px] font-extrabold uppercase leading-[0.85]">
             Burgers
             <br />
-            que batem
+            <span className="text-[#F5B942]">that hit</span>
             <br />
-            <span className="text-[#F5B942]">diferente.</span>
+            different.
           </h3>
-          <div className="mt-6 flex gap-2">
-            <span className="rounded-md bg-[#F5B942] px-4 py-2.5 text-[11px] font-black uppercase text-black">
-              Ver cardápio
-            </span>
-            <span className="rounded-md border border-white/20 px-4 py-2.5 text-[11px] font-bold uppercase">
-              Delivery
-            </span>
-          </div>
-        </div>
-
-        <div className="rounded-2xl border border-white/10 bg-[#1A1A1A] p-5">
-          <div className="flex items-center justify-between">
-            <span className="text-3xl font-extrabold text-[#F5B942]">#01</span>
-            <span className="rounded-full bg-[#F5B942]/15 px-2 py-1 text-[8px] font-black uppercase tracking-wider text-[#F5B942]">
-              Best seller
-            </span>
-          </div>
-          <div className="mx-auto my-6 h-24 w-24 rounded-full border-[8px] border-[#F5B942]/25 bg-[#F5B942]/10" />
-          <p className="text-2xl font-extrabold uppercase">Lab Smash</p>
-          <div className="mt-3 flex items-center justify-between">
-            <span className="text-2xl font-extrabold text-[#F5B942]">R$ 32</span>
-            <span className="rounded-md bg-white px-3 py-2 text-[9px] font-black uppercase text-black">
-              Adicionar
-            </span>
+          <div className="mt-8 flex gap-2">
+            {["Todos", "Smash", "Spicy"].map((t, i) => (
+              <span
+                key={t}
+                className={`px-2.5 py-1 text-[9px] font-black uppercase ${
+                  i === 0
+                    ? "bg-[#F5B942] text-black"
+                    : "border border-white/20 text-white/50"
+                }`}
+              >
+                {t}
+              </span>
+            ))}
           </div>
         </div>
       </div>

@@ -5,7 +5,7 @@ import BellaVitaPreview from "./BellaVitaPreview";
 import MercadinhoPreview from "./MercadinhoPreview";
 import ShoppingPreview from "./ShoppingPreview";
 import BurgerLabPreview from "./BurgerLabPreview";
-import OrbitPreview from "./OrbitPreview";
+import DemiroPreview from "./DemiroPreview";
 import type { ComponentType } from "react";
 
 export const projectPreviews: Record<string, ComponentType> = {
@@ -16,5 +16,5 @@ export const projectPreviews: Record<string, ComponentType> = {
   "mercadinho-bom-dia": MercadinhoPreview,
   "shopping-aurora": ShoppingPreview,
   "burger-lab": BurgerLabPreview,
-  "orbit-saas": OrbitPreview,
+  "demiro-cortes": DemiroPreview,
 };

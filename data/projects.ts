@@ -21,45 +21,45 @@ export interface Project {
 export const projects: Project[] = [
   {
     id: "almeida-advocacia",
-    title: "Almeida Advocacia",
+    title: "Miriam Rodrigues Santos",
     category: "Website Institucional",
     description:
-      "Uma presença digital sofisticada para um escritório de advocacia.",
+      "Site institucional elegante para uma advogada — autoridade com proximidade.",
     longDescription:
-      "Uma presença digital sofisticada, construída para transmitir autoridade, confiança e profissionalismo jurídico.",
+      "Uma presença digital sóbria e sofisticada para advocacia pessoal, com tipografia editorial e paleta vinho e ouro.",
     challenge:
       "Transmitir seriedade e excelência técnica sem tornar o site frio ou distante.",
     solution:
-      "Tipografia editorial, paleta navy e ouro, ritmo clássico e seções que reforçam proximidade estratégica.",
+      "Hero com marca e retrato, narrativa de proximidade, áreas de atuação limpas e CTA de conversa.",
     tags: ["Next.js", "TypeScript", "Tailwind CSS"],
-    accent: "#B89B5E",
-    previewBg: "#F8F7F4",
+    accent: "#D4AF37",
+    previewBg: "#5A0B22",
     caseStudy: {
       headline: "Autoridade jurídica com proximidade humana.",
       overview:
-        "A Almeida Advocacia precisava de um site institucional que transmitisse sofisticação e confiança — sem parecer distante. O objetivo era posicionar o escritório como estratégico, claro e acessível para potenciais clientes.",
+        "O escritório precisava de um site institucional que transmitisse sofisticação e confiança — sem parecer distante. O objetivo era posicionar a advogada como estratégica, clara e acessível.",
       highlights: [
-        "Identidade editorial com tipografia serifada",
-        "Paleta navy e ouro para reforçar autoridade",
-        "Estrutura clara: escritório, atuação e contato",
-        "CTA contínuo para agendar conversa",
+        "Identidade vinho e ouro alinhada à marca",
+        "Hero com presença da advogada e espaço para foto",
+        "Estrutura clara: sobre, atuação e contato",
+        "Tom editorial, sem excesso de blocos e cards",
       ],
       approach: [
         {
           title: "Posicionamento",
-          text: "Definimos uma narrativa centrada em estratégia, experiência e confiança — alinhada ao discurso de um escritório premium.",
+          text: "Narrativa centrada em clareza, critério e escuta — alinhada a uma advocacia pessoal de alto padrão.",
         },
         {
           title: "Visual",
-          text: "Cormorant para títulos, Manrope para leitura, ritmo clássico e um painel tipográfico no hero para criar presença sem depender de fotos genéricas.",
+          text: "Cormorant para títulos, Outfit para leitura, vinho como atmosfera e ouro como acento pontual.",
         },
         {
           title: "Conversão",
-          text: "Cada seção conduz ao contato: áreas de atuação objetivas, copy próxima e botões de conversa em pontos-chave da página.",
+          text: "Cada seção conduz ao contato: apresentação, áreas de atuação objetivas e convite à conversa.",
         },
       ],
       result:
-        "Uma demonstração institucional elegante, pronta para apresentar o escritório com credibilidade e convidar o visitante a iniciar uma conversa.",
+        "Uma demonstração institucional elegante, pronta para apresentar a advogada com credibilidade e convidar o visitante a iniciar uma conversa.",
     },
   },
   {
@@ -67,42 +67,42 @@ export const projects: Project[] = [
     title: "Nobre Engenharia",
     category: "Website Institucional",
     description:
-      "Uma experiência digital moderna para uma empresa de engenharia.",
+      "Site técnico de engenharia com filtro de obras e briefing.",
     longDescription:
-      "Uma experiência digital moderna para apresentar projetos, serviços e a identidade técnica da empresa.",
+      "Interface blueprint dark com portfólio filtrável, ficha técnica interativa, processo em stepper e formulário de briefing.",
     challenge:
-      "Comunicar precisão e escala de obra em uma interface limpa e comercial.",
+      "Comunicar precisão e escala sem cair no layout institucional genérico.",
     solution:
-      "Visual industrial, tipografia geométrica, accent laranja e hierarquia forte em números e processo.",
+      "Grid de engenharia, métricas em faixa, obras com filtros e painel técnico ao vivo.",
     tags: ["Next.js", "TypeScript", "Tailwind CSS"],
     accent: "#F05A28",
-    previewBg: "#F4F5F2",
+    previewBg: "#101820",
     caseStudy: {
       headline: "Precisão técnica com presença comercial.",
       overview:
-        "A Nobre Engenharia precisava mostrar escala, processo e confiabilidade em um site que conversasse com clientes B2B sem parecer catálogo genérico.",
+        "A Nobre Engenharia precisava mostrar escala, processo e confiabilidade em um site B2B com ferramentas reais de exploração.",
       highlights: [
-        "Visual industrial com accent laranja",
-        "Tipografia geométrica e hierarquia forte",
-        "Projetos, números e processo em evidência",
-        "CTA direto para contato comercial",
+        "Visual blueprint dark + laranja",
+        "Filtro de obras por tipo e status",
+        "Ficha técnica interativa",
+        "Briefing com modal de envio",
       ],
       approach: [
         {
           title: "Posicionamento",
-          text: "Uma narrativa de transformação de espaços, com foco em entrega, precisão e visão de futuro.",
+          text: "Engenharia de precisão — obra complexa com controle total.",
         },
         {
           title: "Visual",
-          text: "Dark industrial no hero, laranja como energia de marca e cards de projeto com linguagem de obra.",
+          text: "Grid técnico, tipografia Space Grotesk e métricas de impacto na primeira dobra.",
         },
         {
           title: "Conversão",
-          text: "Do hero aos números e ao processo, o visitante entende capacidade e encontra o caminho para falar com a equipe.",
+          text: "Do portfólio ao briefing — o lead comercial começa no site.",
         },
       ],
       result:
-        "Uma demonstração B2B moderna que comunica expertise técnica e gera interesse comercial com clareza.",
+        "Uma demonstração B2B técnica e funcional, pronta para apresentar engenharia com credibilidade.",
     },
   },
   {
@@ -110,42 +110,42 @@ export const projects: Project[] = [
     title: "Prime Imóveis",
     category: "Website Institucional",
     description:
-      "Uma plataforma elegante para apresentar imóveis e oportunidades.",
+      "Buscador de imóveis com filtros, favoritos e comparação.",
     longDescription:
-      "Uma experiência elegante para apresentar imóveis selecionados e oportunidades de alto padrão.",
+      "Plataforma imobiliária com carrossel de destaques, busca por tipo/região/preço, favoritos e comparação lado a lado.",
     challenge:
-      "Criar desejo e curadoria em um mercado visualmente saturado.",
+      "Criar desejo e utilidade real — mais do que vitrine estática.",
     solution:
-      "Hero luxuoso, busca em destaque, tipografia serifada e cards de propriedade com ritmo editorial.",
+      "Hero em carrossel, painel de filtros, favoritar/comparar e lista viva de resultados.",
     tags: ["Next.js", "TypeScript", "Tailwind CSS"],
     accent: "#C6A15B",
-    previewBg: "#17202A",
+    previewBg: "#11151C",
     caseStudy: {
-      headline: "Curadoria imobiliária com desejo visual.",
+      headline: "Curadoria imobiliária com busca de verdade.",
       overview:
-        "A Prime Imóveis precisava de uma presença digital que comunicasse seleção e alto padrão — mais lifestyle do que listagem fria.",
+        "A Prime Imóveis precisava de uma presença que comunicasse alto padrão e ainda ajudasse a achar o imóvel certo.",
       highlights: [
-        "Hero luxuoso com tipografia Playfair",
-        "Busca em destaque sobre a dobra",
-        "Cards de imóveis com ritmo editorial",
-        "Regiões e experiência de atendimento",
+        "Carrossel de destaques full-bleed",
+        "Filtros de tipo, região, preço e dorms",
+        "Favoritos e comparação de até 2 imóveis",
+        "Lista de resultados em tempo real",
       ],
       approach: [
         {
           title: "Posicionamento",
-          text: "O endereço certo muda tudo — uma narrativa de escolha, estilo de vida e curadoria.",
+          text: "O endereço certo muda tudo — com ferramentas para decidir.",
         },
         {
           title: "Visual",
-          text: "Paleta slate e ouro, composição atmosférica no hero e busca flutuante como elemento central de conversão.",
+          text: "Dark luxo com ouro champagne e tipografia Fraunces.",
         },
         {
           title: "Conversão",
-          text: "Do explorar imóveis ao contato com consultor, o funil acompanha o desejo de encontrar o próximo endereço.",
+          text: "Da busca à comparação e ao contato com o consultor.",
         },
       ],
       result:
-        "Uma vitrine digital sofisticada, pronta para apresentar oportunidades e conduzir o visitante a um consultor.",
+        "Uma vitrine digital sofisticada e funcional para imóveis de alto padrão.",
     },
   },
   {
@@ -239,42 +239,42 @@ export const projects: Project[] = [
     title: "Shopping Aurora",
     category: "Centro Comercial",
     description:
-      "Uma vitrine digital para promover um shopping e seus eventos.",
+      "Diretório digital de shopping com busca, filtros, cinema e mapa.",
     longDescription:
-      "Uma experiência urbana e noturna para promover lojas, gastronomia, cinema e eventos de um shopping center.",
+      "Uma experiência urbana para explorar lojas, produtos, sessões de cinema, agenda e como chegar — com busca e filtros em tempo real.",
     challenge:
-      "Transmitir movimento, diversão e escala sem perder clareza de navegação.",
+      "Parecer um shopping de verdade, não só uma landing institucional genérica.",
     solution:
-      "Visual dark glam com accent ciano elétrico, tipografia bold e seções de lojas, food e agenda.",
+      "Hero com busca central, diretório filtrável, vitrine de produtos, cinema, agenda e Maps.",
     tags: ["Next.js", "TypeScript", "Tailwind CSS"],
     accent: "#2EE6A6",
-    previewBg: "#0A0A0F",
+    previewBg: "#07070C",
     caseStudy: {
-      headline: "Energia urbana para um shopping vivo.",
+      headline: "O shopping como app de descoberta.",
       overview:
-        "O Shopping Aurora precisava promover lojas, food, cinema e agenda cultural com visual contemporâneo e ritmo de cidade.",
+        "O Shopping Aurora precisava de um site útil: achar loja, filtrar produto, ver cinema e chegar sem fricção.",
       highlights: [
-        "Dark glam com ciano elétrico",
-        "Tipografia Syne + Archivo",
-        "Lojas, experiência e agenda",
-        "Senso de movimento e evento",
+        "Busca e filtros de lojas por categoria e piso",
+        "Vitrine de produtos com pesquisa",
+        "Sessões de cinema e agenda filtrável",
+        "Como chegar com Google Maps",
       ],
       approach: [
         {
           title: "Posicionamento",
-          text: "Compre. Coma. Viva. — o shopping como ponto de encontro da cidade.",
+          text: "Diretório vivo da cidade — o visitante resolve no site antes de ir.",
         },
         {
           title: "Visual",
-          text: "Base noturna, accent mint e hierarquia bold para comunicar escala e diversão.",
+          text: "Dark urbano com mint elétrico, busca central e listas de diretório em vez do split clássico.",
         },
         {
           title: "Conversão",
-          text: "Da exploração de lojas à agenda e ao como chegar — o visitante encontra motivo para ir.",
+          text: "Da busca à rota no Maps — cada seção empurra a visita presencial.",
         },
       ],
       result:
-        "Uma demonstração vibrante de centro comercial, pronta para promover experiências e eventos.",
+        "Uma demonstração completa de shopping center, com funcionalidades reais de descoberta e navegação.",
     },
   },
   {
@@ -282,85 +282,85 @@ export const projects: Project[] = [
     title: "Burger Lab",
     category: "Food & Beverage",
     description:
-      "Um site moderno e ousado para uma hamburgueria artesanal.",
+      "Hamburgueria com montagem de pedido, filtros e sacola.",
     longDescription:
-      "Uma experiência digital bold para uma hamburgueria artesanal — cardápio, smash burgers e pedido rápido.",
+      "Experiência bold de street food com cardápio filtrável, montagem de burger com extras, sacola lateral e checkout demo.",
     challenge:
-      "Passar energia de street food premium sem parecer template de delivery genérico.",
+      "Passar energia de lab sem parecer template de delivery genérico.",
     solution:
-      "Tipografia condensada, preto + mostarda, menu em cards e CTA direto para pedir.",
+      "Hero tipográfico gigante, menu em lista, builder de extras e drawer de sacola.",
     tags: ["Next.js", "TypeScript", "Tailwind CSS"],
     accent: "#F5B942",
-    previewBg: "#111111",
+    previewBg: "#0E0E0E",
     caseStudy: {
-      headline: "Street food premium com atitude.",
+      headline: "Street food premium com pedido montável.",
       overview:
-        "O Burger Lab precisava de um site ousado: smash, craft e pedido rápido — com personalidade de marca forte.",
+        "O Burger Lab precisava de um site ousado: smash, craft e pedido rápido — com personalidade e utilidade.",
       highlights: [
-        "Tipografia condensada uppercase",
-        "Preto + mostarda de alto contraste",
-        "Cardápio em cards com preço claro",
-        "CTA direto para delivery",
+        "Filtros smash / spicy / veggie",
+        "Montar burger com extras",
+        "Sacola flutuante com qty e total",
+        "Tipografia condensada de alto impacto",
       ],
       approach: [
         {
           title: "Posicionamento",
-          text: "Burgers que batem diferente — laboratório de sabor com vibe de rua.",
+          text: "Burgers that hit different — laboratório de sabor com vibe de rua.",
         },
         {
           title: "Visual",
-          text: "Barlow Condensed, dark base e mostarda para energia imediata e leitura rápida do menu.",
+          text: "Barlow Condensed + Rubik, preto e mostarda, hierarquia tipográfica agressiva.",
         },
         {
           title: "Conversão",
-          text: "Do hero ao cardápio e ao pedido — o caminho para pedir é óbvio e rápido.",
+          text: "Do menu à sacola — o caminho para pedir é óbvio e rápido.",
         },
       ],
       result:
-        "Uma demonstração food bold e moderna, ideal para marcas que querem presença digital com personalidade.",
+        "Uma demonstração food bold e funcional, ideal para marcas com personalidade forte.",
     },
   },
   {
-    id: "orbit-saas",
-    title: "Orbit",
-    category: "SaaS / Startup",
+    id: "demiro-cortes",
+    title: "Demiro Cortes",
+    category: "Barbearia",
     description:
-      "Uma landing moderna para um produto SaaS de analytics.",
+      "Site preto e amarelo para barbearia — com agendamento e mapa.",
     longDescription:
-      "Uma landing page de produto para uma startup SaaS — hero com UI mock, features, pricing e CTA de trial.",
+      "Uma experiência digital ousada para barbearia: serviços, agendamento em etapas e como chegar no Google Maps.",
     challenge:
-      "Comunicar produto técnico com clareza, velocidade e visual de startup atual.",
+      "Sair do visual genérico de barbearias e das landings repetidas do portfólio.",
     solution:
-      "Interface clean em zinc, accent sky, tipografia Plus Jakarta e seções de produto/pricing.",
+      "Identidade preto + amarelo elétrico, hero diagonal, fluxo de agendamento interativo e mapa embutido.",
     tags: ["Next.js", "TypeScript", "Tailwind CSS"],
-    accent: "#0EA5E9",
-    previewBg: "#09090B",
+    accent: "#FFD400",
+    previewBg: "#0A0A0A",
     caseStudy: {
-      headline: "Produto SaaS claro, rápido e atual.",
+      headline: "Barbearia com atitude e horário marcado.",
       overview:
-        "A Orbit precisava de uma landing que explicasse o produto, mostrasse a interface e levasse ao trial sem ruído.",
+        "A Demiro Cortes precisava de um site com personalidade forte, agendamento simples e localização clara para o cliente chegar sem fricção.",
       highlights: [
-        "Hero centrado com mock de dashboard",
-        "Features e pricing objetivos",
-        "Paleta zinc + sky",
-        "CTA de trial em evidência",
+        "Paleta preto e amarelo de alto contraste",
+        "Agendamento em etapas com confirmação",
+        "Google Maps embutido + rota",
+        "Animações próprias (poste, marquee, steps)",
       ],
       approach: [
         {
           title: "Posicionamento",
-          text: "Analytics que a startup realmente usa — foco em decisão rápida e clareza.",
+          text: "Corte com atitude — direto, urbano e sem enrolação.",
         },
         {
           title: "Visual",
-          text: "Plus Jakarta, mono para detalhes técnicos e UI mock que prova o produto na primeira dobra.",
+          text: "Anton + DM Sans, diagonal amarela no hero e detalhes de barbearia clássica revisitada.",
         },
         {
           title: "Conversão",
-          text: "Do trial gratuito ao pricing — o funil acompanha o ciclo de avaliação de um SaaS.",
+          text: "Do serviço ao horário confirmado, com mapa para o cliente saber como chegar.",
         },
       ],
       result:
-        "Uma landing de produto moderna, pronta para apresentar a Orbit e converter para o trial.",
+        "Uma demonstração de barbearia completa, com funcionalidades reais de agenda e localização.",
     },
   },
 ];
