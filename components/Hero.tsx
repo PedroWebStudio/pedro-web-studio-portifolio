@@ -23,10 +23,11 @@ export default function Hero() {
           </div>
 
           <h1 className="max-w-3xl text-[2.5rem] font-semibold leading-[1.08] tracking-tight sm:text-5xl lg:text-7xl">
-            Transformando ideias
+            Transformando
             <br />
-            em experiências
+            ideias em
             <br />
+            Experiências{" "}
             <span className="text-zinc-500">digitais.</span>
           </h1>
 

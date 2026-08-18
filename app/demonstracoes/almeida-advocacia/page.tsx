@@ -292,9 +292,9 @@ export default function AlmeidaAdvocacia() {
         </Link>
       </div>
 
-      {/* NAV — linha fina, marca no centro */}
+      {/* NAV — MS à esquerda no celular, cantos opostos */}
       <header className="absolute inset-x-0 top-0 z-40">
-        <div className="mx-auto grid max-w-6xl grid-cols-[1fr_auto_1fr] items-center px-6 py-6 lg:px-8">
+        <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-6 lg:grid lg:grid-cols-[1fr_auto_1fr] lg:px-8">
           <nav className="hidden items-center gap-6 lg:flex">
             {nav.map((item) => (
               <a
@@ -307,26 +307,24 @@ export default function AlmeidaAdvocacia() {
             ))}
           </nav>
 
-          <a href="#" className="justify-self-center md:hidden">
+          <a href="#" className="lg:justify-self-center">
             <span className="font-[family-name:var(--font-mrs-display)] text-lg tracking-wide text-[#D4AF37]">
               MS
             </span>
           </a>
 
-          <div className="hidden justify-self-center md:block" aria-hidden />
-
           <div className="flex items-center justify-end gap-4">
             <button
               type="button"
               onClick={openContact}
-              className="hidden text-[10px] font-semibold uppercase tracking-[0.28em] text-[#D4AF37] transition hover:text-white md:inline"
+              className="hidden text-[10px] font-semibold uppercase tracking-[0.28em] text-[#D4AF37] transition hover:text-white lg:inline"
             >
               Contato
             </button>
             <button
               type="button"
               onClick={() => setMenuOpen((v) => !v)}
-              className="flex flex-col gap-1.5 md:hidden"
+              className="flex flex-col gap-1.5 lg:hidden"
               aria-label="Menu"
             >
               <span className="block h-px w-6 bg-white" />
@@ -342,7 +340,7 @@ export default function AlmeidaAdvocacia() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="border-t border-white/10 bg-[#5A0B22]/95 px-6 py-4 backdrop-blur md:hidden"
+              className="border-t border-white/10 bg-[#5A0B22]/95 px-6 py-4 backdrop-blur lg:hidden"
             >
               {nav.map((item) => (
                 <a
