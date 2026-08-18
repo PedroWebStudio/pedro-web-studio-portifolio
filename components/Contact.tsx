@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
+import { ArrowRight } from "@/components/icons";
 
 export default function Contact() {
   return (
@@ -40,7 +41,7 @@ export default function Contact() {
               className="inline-flex h-12 items-center justify-center rounded-full bg-[#D4AF37] px-8 text-sm font-semibold text-black"
             >
               Vamos conversar
-              <span className="ml-2">→</span>
+              <ArrowRight className="ml-2 h-4 w-4" />
             </Link>
           </motion.div>
 

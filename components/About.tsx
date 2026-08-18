@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { ArrowRight } from "@/components/icons";
 
 const stats = [
   { value: "8+", label: "Projetos entregues" },
@@ -116,7 +117,8 @@ export default function About() {
               whileTap={{ scale: 0.97 }}
               className="mt-10 inline-flex h-11 items-center justify-center rounded-full bg-[#D4AF37] px-7 text-sm font-semibold text-black"
             >
-              Vamos conversar →
+              Vamos conversar
+              <ArrowRight className="ml-2 h-4 w-4" />
             </motion.a>
           </motion.div>
 

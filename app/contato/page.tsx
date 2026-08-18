@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import { contact, getWhatsAppUrl } from "@/data/contact";
 import ContactEmailModal from "@/components/ContactEmailModal";
+import { ArrowLeft, ArrowRight } from "@/components/icons";
 
 export default function ContatoPage() {
   const [emailModalOpen, setEmailModalOpen] = useState(false);
@@ -18,9 +19,10 @@ export default function ContatoPage() {
 
         <Link
           href="/"
-          className="text-sm text-zinc-400 transition-colors hover:text-white"
+          className="inline-flex items-center gap-1.5 text-sm text-zinc-400 transition-colors hover:text-white"
         >
-          ← Voltar ao início
+          <ArrowLeft />
+          Voltar ao início
         </Link>
       </header>
 
@@ -57,7 +59,7 @@ export default function ContatoPage() {
               className="inline-flex h-14 items-center justify-center rounded-full bg-[#D4AF37] px-8 text-sm font-semibold text-black transition hover:bg-white"
             >
               WhatsApp
-              <span className="ml-2">→</span>
+              <ArrowRight className="ml-2 h-4 w-4" />
             </motion.a>
 
             <motion.button
@@ -87,7 +89,8 @@ export default function ContatoPage() {
                 href="/orcamento"
                 className="shrink-0 inline-flex h-11 items-center justify-center rounded-full bg-[#D4AF37] px-7 text-sm font-semibold text-black transition hover:bg-white"
               >
-                Comece seu projeto →
+                Comece seu projeto
+                <ArrowRight className="ml-2 h-4 w-4" />
               </Link>
             </div>
           </motion.div>

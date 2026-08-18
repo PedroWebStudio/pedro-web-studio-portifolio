@@ -4,6 +4,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Anton, DM_Sans } from "next/font/google";
 import Link from "next/link";
 import { FormEvent, useMemo, useState } from "react";
+import { ArrowLeft } from "@/components/icons";
 
 const display = Anton({
   subsets: ["latin"],
@@ -132,7 +133,7 @@ export default function DemiroCortes() {
           className="group flex items-center gap-2 rounded-full bg-[#FFD400] px-4 py-2 text-xs font-bold text-black transition hover:bg-white"
         >
           <span className="transition-transform group-hover:-translate-x-1">
-            ←
+            <ArrowLeft className="h-3.5 w-3.5" />
           </span>
           Escolher outro projeto
         </Link>
@@ -495,7 +496,10 @@ export default function DemiroCortes() {
                     onClick={() => setStep(0)}
                     className="mt-6 text-xs uppercase tracking-[0.2em] text-white/40 hover:text-[#FFD400]"
                   >
-                    ← Voltar
+                    <span className="inline-flex items-center gap-1">
+                      <ArrowLeft className="h-3 w-3" />
+                      Voltar
+                    </span>
                   </button>
                 </motion.div>
               )}
@@ -535,7 +539,10 @@ export default function DemiroCortes() {
                     onClick={() => setStep(1)}
                     className="mt-6 text-xs uppercase tracking-[0.2em] text-white/40 hover:text-[#FFD400]"
                   >
-                    ← Voltar
+                    <span className="inline-flex items-center gap-1">
+                      <ArrowLeft className="h-3 w-3" />
+                      Voltar
+                    </span>
                   </button>
                 </motion.div>
               )}

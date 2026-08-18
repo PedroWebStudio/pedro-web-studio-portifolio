@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import TerminalMockup from "@/components/TerminalMockup";
+import { ArrowRight } from "@/components/icons";
 
 export default function Hero() {
   return (
@@ -89,7 +90,7 @@ export default function Hero() {
               className="inline-flex h-11 items-center justify-center rounded-full bg-[#D4AF37] px-7 text-sm font-semibold text-black"
             >
               Ver projetos
-              <span className="ml-2">→</span>
+              <ArrowRight className="ml-2 h-4 w-4" />
             </motion.a>
 
             <motion.a

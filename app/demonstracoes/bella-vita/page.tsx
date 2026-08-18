@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Fraunces, Outfit } from "next/font/google";
 import Link from "next/link";
 import { useState } from "react";
+import { ArrowLeft } from "@/components/icons";
 
 const fraunces = Fraunces({
   subsets: ["latin"],
@@ -53,7 +54,7 @@ export default function BellaVita() {
           className="group flex items-center gap-2 rounded-full bg-[#6B8F71] px-4 py-2 text-xs font-semibold text-white transition hover:bg-[#3D3632]"
         >
           <span className="transition-transform group-hover:-translate-x-1">
-            ←
+            <ArrowLeft className="h-3.5 w-3.5" />
           </span>
           Escolher outro projeto
         </Link>

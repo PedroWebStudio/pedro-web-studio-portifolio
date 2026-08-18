@@ -4,6 +4,7 @@ import { AnimatePresence, motion, useScroll, useTransform } from "framer-motion"
 import { Cormorant_Garamond, Manrope } from "next/font/google";
 import Image from "next/image";
 import Link from "next/link";
+import { ArrowLeft, ArrowRight } from "@/components/icons";
 import {
   FormEvent,
   useEffect,
@@ -240,7 +241,9 @@ function ContactModal({
                   className="group flex w-full items-center justify-center gap-3 rounded-lg bg-[#D4AF37] py-3.5 text-[11px] font-semibold uppercase tracking-[0.2em] text-[#3d0a18] transition hover:bg-white"
                 >
                   Enviar mensagem
-                  <span className="transition-transform group-hover:translate-x-1">→</span>
+                  <span className="transition-transform group-hover:translate-x-1">
+                    <ArrowRight className="h-3.5 w-3.5" />
+                  </span>
                 </button>
               </form>
             </div>
@@ -283,7 +286,7 @@ export default function AlmeidaAdvocacia() {
           className="group flex items-center gap-2 rounded-full bg-[#5A0B22] px-4 py-2 text-xs font-semibold text-white transition hover:bg-[#B8953D]"
         >
           <span className="transition-transform group-hover:-translate-x-1">
-            ←
+            <ArrowLeft className="h-3.5 w-3.5" />
           </span>
           Escolher outro projeto
         </Link>

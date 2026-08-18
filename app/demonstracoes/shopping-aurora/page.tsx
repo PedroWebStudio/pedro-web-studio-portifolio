@@ -4,6 +4,7 @@ import { AnimatePresence, LayoutGroup, motion } from "framer-motion";
 import { Archivo, Syne } from "next/font/google";
 import Link from "next/link";
 import { useMemo, useState } from "react";
+import { ArrowLeft } from "@/components/icons";
 
 const syne = Syne({
   subsets: ["latin"],
@@ -265,7 +266,7 @@ export default function ShoppingAurora() {
           className="group flex items-center gap-2 rounded-full bg-[#2EE6A6] px-4 py-2 text-xs font-bold text-[#07070C] transition hover:bg-white"
         >
           <span className="transition-transform group-hover:-translate-x-1">
-            ←
+            <ArrowLeft className="h-3.5 w-3.5" />
           </span>
           Escolher outro projeto
         </Link>

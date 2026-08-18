@@ -5,6 +5,7 @@ import { Space_Grotesk } from "next/font/google";
 import Image from "next/image";
 import Link from "next/link";
 import { FormEvent, useMemo, useRef, useState } from "react";
+import { ArrowLeft } from "@/components/icons";
 
 const space = Space_Grotesk({
   subsets: ["latin"],
@@ -173,7 +174,9 @@ export default function NobreEngenharia() {
           href="/"
           className="group flex items-center gap-2 rounded-full bg-[#F05A28] px-4 py-2 text-xs font-semibold text-white transition hover:bg-white hover:text-[#101820]"
         >
-          <span className="transition-transform group-hover:-translate-x-1">←</span>
+          <span className="transition-transform group-hover:-translate-x-1">
+            <ArrowLeft className="h-3.5 w-3.5" />
+          </span>
           Escolher outro projeto
         </Link>
       </div>

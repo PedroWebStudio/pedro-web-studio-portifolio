@@ -5,6 +5,7 @@ import { Barlow_Condensed, Rubik } from "next/font/google";
 import Image from "next/image";
 import Link from "next/link";
 import { useMemo, useState } from "react";
+import { ArrowLeft } from "@/components/icons";
 
 const barlow = Barlow_Condensed({
   subsets: ["latin"],
@@ -243,7 +244,7 @@ export default function BurgerLab() {
           className="group flex items-center gap-2 rounded-full bg-[#F5B942] px-4 py-2 text-xs font-bold text-black transition hover:bg-white"
         >
           <span className="transition-transform group-hover:-translate-x-1">
-            ←
+            <ArrowLeft className="h-3.5 w-3.5" />
           </span>
           Escolher outro projeto
         </Link>

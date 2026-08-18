@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { ArrowRight } from "@/components/icons";
 
 export default function Footer() {
   return (
@@ -12,9 +13,10 @@ export default function Footer() {
 
         <Link
           href="/contato"
-          className="transition-colors hover:text-[#D4AF37]"
+          className="inline-flex items-center gap-1.5 transition-colors hover:text-[#D4AF37]"
         >
-          Vamos conversar →
+          Vamos conversar
+          <ArrowRight />
         </Link>
       </div>
     </footer>

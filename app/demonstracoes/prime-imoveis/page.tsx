@@ -5,6 +5,7 @@ import { DM_Sans, Fraunces } from "next/font/google";
 import Image from "next/image";
 import Link from "next/link";
 import { useMemo, useState } from "react";
+import { ArrowLeft, ArrowRight } from "@/components/icons";
 
 const display = Fraunces({
   subsets: ["latin"],
@@ -247,7 +248,7 @@ export default function PrimeImoveis() {
           className="group flex items-center gap-2 rounded-full bg-[#C6A15B] px-4 py-2 text-xs font-semibold text-[#11151C] transition hover:bg-white"
         >
           <span className="transition-transform group-hover:-translate-x-1">
-            ←
+            <ArrowLeft className="h-3.5 w-3.5" />
           </span>
           Escolher outro projeto
         </Link>
@@ -412,9 +413,10 @@ export default function PrimeImoveis() {
               onClick={() =>
                 setFeaturedIndex((i) => (i + 1) % featured.length)
               }
-              className="border border-white/30 bg-black/20 px-5 py-3 text-[11px] uppercase tracking-[0.16em] backdrop-blur transition hover:border-[#C6A15B] hover:text-[#C6A15B]"
+              className="inline-flex items-center gap-2 border border-white/30 bg-black/20 px-5 py-3 text-[11px] uppercase tracking-[0.16em] backdrop-blur transition hover:border-[#C6A15B] hover:text-[#C6A15B]"
             >
-              Próximo destaque →
+              Próximo destaque
+              <ArrowRight className="h-3.5 w-3.5" />
             </button>
             <a
               href="#busca"

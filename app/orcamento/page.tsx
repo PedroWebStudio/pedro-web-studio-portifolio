@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
+import { ArrowLeft, ArrowRight } from "@/components/icons";
 
 // ─── tipos ────────────────────────────────────────────────────────────────────
 type FormData = {
@@ -167,8 +168,9 @@ export default function OrcamentoPage() {
         <Link href="/" className="text-lg font-semibold tracking-tight">
           PEDRO WEB STUDIO<span className="text-[#D4AF37]">.</span>
         </Link>
-        <Link href="/" className="text-sm text-zinc-400 transition-colors hover:text-white">
-          ← Voltar ao início
+        <Link href="/" className="inline-flex items-center gap-1.5 text-sm text-zinc-400 transition-colors hover:text-white">
+          <ArrowLeft />
+          Voltar ao início
         </Link>
       </header>
 
@@ -338,7 +340,8 @@ export default function OrcamentoPage() {
               onClick={() => go(step - 1)}
               className="inline-flex h-11 items-center justify-center rounded-full border border-zinc-700 px-6 text-sm text-zinc-300 transition-all hover:border-zinc-500 hover:text-white"
             >
-              ← Voltar
+              <ArrowLeft className="mr-1.5 h-4 w-4" />
+              Voltar
             </button>
           ) : (
             <span />
@@ -357,7 +360,8 @@ export default function OrcamentoPage() {
                   : "cursor-not-allowed bg-zinc-800 text-zinc-600"
               }`}
             >
-              Continuar →
+              Continuar
+              <ArrowRight className="ml-1.5 h-4 w-4" />
             </motion.button>
           ) : (
             <motion.button
@@ -372,7 +376,8 @@ export default function OrcamentoPage() {
                   : "cursor-not-allowed bg-zinc-800 text-zinc-600"
               }`}
             >
-              Enviar solicitação →
+              Enviar solicitação
+              <ArrowRight className="ml-1.5 h-4 w-4" />
             </motion.button>
           )}
         </div>

@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import type { Project } from "@/data/projects";
+import { ArrowRight } from "@/components/icons";
 
 interface ProjectCardProps {
   project: Project;
@@ -111,8 +112,9 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
 
           {/* Hover overlay */}
           <div className="absolute inset-0 flex items-center justify-center bg-black/50 opacity-100 transition-opacity duration-300 sm:opacity-0 sm:group-hover:opacity-100">
-            <span className="rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-black">
-              Ver projeto →
+            <span className="inline-flex items-center gap-2 rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-black">
+              Ver projeto
+              <ArrowRight className="h-4 w-4" />
             </span>
           </div>
         </div>

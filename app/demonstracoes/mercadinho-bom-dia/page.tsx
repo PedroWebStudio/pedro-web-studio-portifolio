@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Nunito } from "next/font/google";
 import Link from "next/link";
 import { useState } from "react";
+import { ArrowLeft } from "@/components/icons";
 
 const nunito = Nunito({
   subsets: ["latin"],
@@ -54,7 +55,7 @@ export default function MercadinhoBomDia() {
           className="group flex items-center gap-2 rounded-full bg-[#E85D4C] px-4 py-2 text-xs font-bold text-white transition hover:bg-[#1F3D2B]"
         >
           <span className="transition-transform group-hover:-translate-x-1">
-            ←
+            <ArrowLeft className="h-3.5 w-3.5" />
           </span>
           Escolher outro projeto
         </Link>

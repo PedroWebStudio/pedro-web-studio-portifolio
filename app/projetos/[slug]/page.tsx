@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { getProjectById } from "@/data/projects";
+import { ArrowLeft, ArrowRight, ArrowUpRight } from "@/components/icons";
 
 interface ProjectPageProps {
   params: Promise<{
@@ -19,9 +20,10 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
 
           <Link
             href="/"
-            className="mt-6 inline-block text-[#D4AF37] hover:underline"
+            className="mt-6 inline-flex items-center text-[#D4AF37] hover:underline"
           >
-            Voltar para o portfólio →
+            Voltar para o portfólio
+            <ArrowRight className="ml-1 h-4 w-4" />
           </Link>
         </div>
       </main>
@@ -39,9 +41,10 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
 
         <Link
           href="/#projetos"
-          className="text-sm text-zinc-400 transition-colors hover:text-white"
+          className="inline-flex items-center gap-1.5 text-sm text-zinc-400 transition-colors hover:text-white"
         >
-          ← Voltar para projetos
+          <ArrowLeft />
+          Voltar para projetos
         </Link>
       </header>
 
@@ -65,7 +68,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
               className="inline-flex items-center gap-2 bg-[#D4AF37] px-6 py-3 text-sm font-semibold text-black transition hover:bg-white"
             >
               Visitar demonstração
-              <span>↗</span>
+              <ArrowUpRight />
             </Link>
 
             <Link
@@ -187,7 +190,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
               className="inline-flex items-center justify-center gap-2 bg-[#D4AF37] px-6 py-3 text-sm font-semibold text-black transition hover:bg-white"
             >
               Ver demonstração
-              <span>↗</span>
+              <ArrowUpRight />
             </Link>
             <Link
               href="/contato"
