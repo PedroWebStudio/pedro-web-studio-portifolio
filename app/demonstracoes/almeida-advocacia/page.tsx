@@ -121,9 +121,6 @@ const nav = [
   { href: "#como-funciona", label: "Como funciona" },
 ];
 
-const fieldClass =
-  "mt-2 w-full border border-white/15 bg-white/5 px-4 py-3 text-sm text-white outline-none transition placeholder:text-white/30 focus:border-[#D4AF37]";
-
 function ContactModal({
   open,
   onClose,
@@ -137,11 +134,7 @@ function ContactModal({
     if (!open) return;
     const previous = document.body.style.overflow;
     document.body.style.overflow = "hidden";
-
-    function onKeyDown(event: KeyboardEvent) {
-      if (event.key === "Escape") onClose();
-    }
-
+    const onKeyDown = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
     window.addEventListener("keydown", onKeyDown);
     return () => {
       document.body.style.overflow = previous;
@@ -149,8 +142,8 @@ function ContactModal({
     };
   }, [open, onClose]);
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
+  function handleSubmit(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
     onClose();
   }
 
@@ -163,130 +156,94 @@ function ContactModal({
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
         >
-          <button
-            type="button"
-            aria-label="Fechar"
-            className="absolute inset-0 bg-black/70 backdrop-blur-sm"
-            onClick={onClose}
-          />
+          <button type="button" aria-label="Fechar" className="absolute inset-0 bg-black/75 backdrop-blur-md" onClick={onClose} />
 
           <motion.div
             role="dialog"
             aria-modal="true"
             aria-labelledby={titleId}
-            initial={{ opacity: 0, y: 24, scale: 0.98 }}
+            initial={{ opacity: 0, y: 32, scale: 0.97 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 16, scale: 0.98 }}
-            transition={{ duration: 0.25 }}
-            className="relative z-10 max-h-[90vh] w-full max-w-lg overflow-y-auto border border-white/10 bg-[#5A0B22] shadow-2xl"
+            exit={{ opacity: 0, y: 20, scale: 0.97 }}
+            transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+            className="relative z-10 flex w-full max-w-2xl overflow-hidden rounded-2xl shadow-2xl"
           >
-            <div className="flex items-start justify-between border-b border-white/10 px-6 py-5">
+            {/* Sidebar */}
+            <div className="hidden w-56 shrink-0 flex-col justify-between bg-[#3d0a18] p-8 sm:flex">
               <div>
-                <p className="text-[10px] font-medium uppercase tracking-[0.28em] text-[#D4AF37]">
-                  Contato
-                </p>
-                <h2
-                  id={titleId}
-                  className="mt-2 font-[family-name:var(--font-mrs-display)] text-2xl text-white"
-                >
-                  Fale comigo
+                <p className="text-[10px] font-medium uppercase tracking-[0.3em] text-[#D4AF37]">Contato</p>
+                <h2 id={titleId} className="mt-4 font-[family-name:var(--font-mrs-display)] text-3xl leading-tight text-white">
+                  Fale<br />comigo
                 </h2>
+                <div className="mt-6 h-px w-10 bg-[#D4AF37]/50" />
+                <p className="mt-6 text-xs leading-6 text-white/45">
+                  Respondo em até 24h com atenção ao seu caso.
+                </p>
               </div>
-              <button
-                type="button"
-                onClick={onClose}
-                className="border border-white/20 px-3 py-1 text-xs uppercase tracking-wider text-white/60 transition hover:border-[#D4AF37] hover:text-[#D4AF37]"
-              >
-                Fechar
-              </button>
+              <div className="space-y-3">
+                <p className="text-[10px] uppercase tracking-[0.2em] text-white/30">Contatos</p>
+                <a href="tel:+5511999999999" className="block text-xs text-white/60 transition hover:text-[#D4AF37]">(11) 99999-9999</a>
+                <a href="https://instagram.com/advmiriam" target="_blank" rel="noopener noreferrer" className="block text-xs text-white/60 transition hover:text-[#D4AF37]">@advmiriam</a>
+              </div>
             </div>
 
-            <form onSubmit={handleSubmit} className="space-y-4 px-6 py-6">
-              <label className="block text-left">
-                <span className="text-xs font-medium uppercase tracking-[0.16em] text-white/70">
-                  Nome completo
-                </span>
-                <input
-                  required
-                  name="name"
-                  type="text"
-                  autoComplete="name"
-                  placeholder="Seu nome"
-                  className={fieldClass}
-                />
-              </label>
-
-              <label className="block text-left">
-                <span className="text-xs font-medium uppercase tracking-[0.16em] text-white/70">
-                  Telefone / WhatsApp
-                </span>
-                <input
-                  required
-                  name="phone"
-                  type="tel"
-                  inputMode="tel"
-                  autoComplete="tel"
-                  placeholder="(11) 99999-9999"
-                  className={fieldClass}
-                />
-              </label>
-
-              <label className="block text-left">
-                <span className="text-xs font-medium uppercase tracking-[0.16em] text-white/70">
-                  E-mail
-                </span>
-                <input
-                  required
-                  name="email"
-                  type="email"
-                  autoComplete="email"
-                  placeholder="seu@email.com"
-                  className={fieldClass}
-                />
-              </label>
-
-              <label className="block text-left">
-                <span className="text-xs font-medium uppercase tracking-[0.16em] text-white/70">
-                  Assunto
-                </span>
-                <input
-                  required
-                  name="subject"
-                  type="text"
-                  placeholder="Ex.: rescisão, horas extras..."
-                  className={fieldClass}
-                />
-              </label>
-
-              <label className="block text-left">
-                <span className="text-xs font-medium uppercase tracking-[0.16em] text-white/70">
-                  Mensagem
-                </span>
-                <textarea
-                  required
-                  name="message"
-                  rows={4}
-                  placeholder="Conte brevemente a sua situação"
-                  className={`${fieldClass} resize-y`}
-                />
-              </label>
-
-              <div className="flex flex-col-reverse gap-3 pt-2 sm:flex-row sm:justify-end">
+            {/* Formulário */}
+            <div className="flex-1 overflow-y-auto bg-[#5A0B22]">
+              <div className="flex items-center justify-between border-b border-white/10 px-6 py-5">
+                <p className="font-[family-name:var(--font-mrs-display)] text-xl text-white sm:hidden">Fale comigo</p>
+                <div className="hidden sm:block" />
                 <button
                   type="button"
                   onClick={onClose}
-                  className="inline-flex h-11 items-center justify-center border border-white/25 px-5 text-xs uppercase tracking-[0.16em] text-white/70 transition hover:border-white/50 hover:text-white"
+                  className="flex h-8 w-8 items-center justify-center rounded-full border border-white/15 text-white/50 transition hover:border-[#D4AF37] hover:text-[#D4AF37]"
+                  aria-label="Fechar"
                 >
-                  Cancelar
-                </button>
-                <button
-                  type="submit"
-                  className="inline-flex h-11 items-center justify-center bg-[#D4AF37] px-6 text-xs font-semibold uppercase tracking-[0.16em] text-[#5A0B22] transition hover:bg-white"
-                >
-                  Enviar
+                  <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.5">
+                    <path d="M1 1l10 10M11 1L1 11" />
+                  </svg>
                 </button>
               </div>
-            </form>
+
+              <form onSubmit={handleSubmit} className="space-y-4 p-6">
+                <div className="grid gap-4 sm:grid-cols-2">
+                  <label className="block">
+                    <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/50">Nome</span>
+                    <input required name="name" type="text" autoComplete="name" placeholder="Seu nome"
+                      className="mt-2 w-full rounded-lg border border-white/10 bg-white/5 px-4 py-3 text-sm text-white outline-none transition placeholder:text-white/25 focus:border-[#D4AF37]/60 focus:bg-white/8" />
+                  </label>
+                  <label className="block">
+                    <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/50">WhatsApp</span>
+                    <input required name="phone" type="tel" inputMode="tel" autoComplete="tel" placeholder="(11) 99999-9999"
+                      className="mt-2 w-full rounded-lg border border-white/10 bg-white/5 px-4 py-3 text-sm text-white outline-none transition placeholder:text-white/25 focus:border-[#D4AF37]/60 focus:bg-white/8" />
+                  </label>
+                </div>
+
+                <label className="block">
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/50">E-mail</span>
+                  <input required name="email" type="email" autoComplete="email" placeholder="seu@email.com"
+                    className="mt-2 w-full rounded-lg border border-white/10 bg-white/5 px-4 py-3 text-sm text-white outline-none transition placeholder:text-white/25 focus:border-[#D4AF37]/60 focus:bg-white/8" />
+                </label>
+
+                <label className="block">
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/50">Assunto</span>
+                  <input required name="subject" type="text" placeholder="Ex.: rescisão, horas extras..."
+                    className="mt-2 w-full rounded-lg border border-white/10 bg-white/5 px-4 py-3 text-sm text-white outline-none transition placeholder:text-white/25 focus:border-[#D4AF37]/60 focus:bg-white/8" />
+                </label>
+
+                <label className="block">
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/50">Mensagem</span>
+                  <textarea required name="message" rows={4} placeholder="Conte brevemente a sua situação"
+                    className="mt-2 w-full resize-none rounded-lg border border-white/10 bg-white/5 px-4 py-3 text-sm text-white outline-none transition placeholder:text-white/25 focus:border-[#D4AF37]/60 focus:bg-white/8" />
+                </label>
+
+                <button type="submit"
+                  className="group flex w-full items-center justify-center gap-3 rounded-lg bg-[#D4AF37] py-3.5 text-[11px] font-semibold uppercase tracking-[0.2em] text-[#3d0a18] transition hover:bg-white"
+                >
+                  Enviar mensagem
+                  <span className="transition-transform group-hover:translate-x-1">→</span>
+                </button>
+              </form>
+            </div>
           </motion.div>
         </motion.div>
       )}
@@ -532,7 +489,14 @@ export default function AlmeidaAdvocacia() {
             className="mt-14 inline-flex flex-col items-center gap-3 text-[10px] font-medium uppercase tracking-[0.35em] text-white/40 transition hover:text-[#D4AF37]"
           >
             Conhecer
-            <span className="h-10 w-px bg-gradient-to-b from-white/40 to-transparent" />
+            {/* Scroll indicator animado */}
+            <span className="relative flex h-12 w-5 items-start justify-center overflow-hidden rounded-full border border-white/20">
+              <motion.span
+                className="mt-1.5 h-2 w-1 rounded-full bg-[#D4AF37]"
+                animate={{ y: [0, 24, 0] }}
+                transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
+              />
+            </span>
           </motion.a>
         </motion.div>
       </section>

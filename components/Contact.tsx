@@ -30,24 +30,19 @@ export default function Contact() {
             Vamos transformar sua ideia em uma experiência digital.
           </p>
 
-          <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
-            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.97 }}>
-              <Link
-                href="/contato"
-                className="inline-flex h-12 items-center justify-center rounded-full bg-[#D4AF37] px-8 text-sm font-semibold text-black"
-              >
-                Falar comigo
-                <span className="ml-2">→</span>
-              </Link>
-            </motion.div>
-
+          <motion.div
+            className="mt-10"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.97 }}
+          >
             <Link
-              href="/#projetos"
-              className="inline-flex h-12 items-center justify-center rounded-full border border-zinc-700 px-8 text-sm font-medium text-white transition hover:border-[#D4AF37] hover:text-[#D4AF37]"
+              href="/contato"
+              className="inline-flex h-12 items-center justify-center rounded-full bg-[#D4AF37] px-8 text-sm font-semibold text-black"
             >
-              Ver projetos novamente
+              Vamos conversar
+              <span className="ml-2">→</span>
             </Link>
-          </div>
+          </motion.div>
 
           <p className="mt-8 text-sm text-zinc-600">
             contatopedrowebstudio@gmail.com

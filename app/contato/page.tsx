@@ -71,6 +71,27 @@ export default function ContatoPage() {
             </motion.button>
           </div>
 
+          {/* Card orçamento */}
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="mt-8 overflow-hidden rounded-2xl border border-zinc-800 bg-zinc-900/60"
+          >
+            <div className="flex flex-col items-center gap-4 p-8 sm:flex-row sm:items-center sm:justify-between">
+              <div className="text-center sm:text-left">
+                <p className="text-base font-semibold text-white">Prefere detalhar seu projeto?</p>
+                <p className="mt-1 text-sm text-zinc-500">Preencha o formulário e receba uma proposta personalizada.</p>
+              </div>
+              <Link
+                href="/orcamento"
+                className="shrink-0 inline-flex h-11 items-center justify-center rounded-full bg-[#D4AF37] px-7 text-sm font-semibold text-black transition hover:bg-white"
+              >
+                Comece seu projeto →
+              </Link>
+            </div>
+          </motion.div>
+
           <p className="mt-8 text-sm text-zinc-600">{contact.email}</p>
         </motion.div>
 

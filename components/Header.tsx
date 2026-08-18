@@ -8,7 +8,7 @@ const navItems = [
   { label: "Projetos", href: "/#projetos" },
   { label: "Serviços", href: "/#servicos" },
   { label: "Sobre", href: "/#sobre" },
-  { label: "Contato", href: "/contato" },
+  { label: "Contato", href: "/#contato" },
 ];
 
 export default function Header() {
@@ -39,10 +39,10 @@ export default function Header() {
         </nav>
 
         <Link
-          href="/contato"
-          className="hidden rounded-full border border-zinc-700 px-5 py-2.5 text-sm transition-all hover:border-[#D4AF37] hover:text-[#D4AF37] md:block"
+          href="/orcamento"
+          className="hidden rounded-full bg-[#D4AF37] px-5 py-2.5 text-sm font-semibold text-black transition-all hover:bg-white md:inline-flex"
         >
-          Vamos conversar
+          Iniciar projeto
         </Link>
 
         <button
@@ -85,11 +85,11 @@ export default function Header() {
               </Link>
             ))}
             <Link
-              href="/contato"
+              href="/orcamento"
               onClick={() => setOpen(false)}
-              className="mt-3 rounded-full border border-zinc-700 px-5 py-3 text-center text-sm transition-all hover:border-[#D4AF37] hover:text-[#D4AF37]"
+              className="mt-3 rounded-full bg-[#D4AF37] px-5 py-3 text-center text-sm font-semibold text-black"
             >
-              Vamos conversar
+              Iniciar projeto
             </Link>
           </motion.div>
         )}
