@@ -1,17 +1,48 @@
 import { Resend } from "resend";
 
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
+
+const TO = "contatopedrowebstudio@gmail.com";
+const FROM = "Pedro Web Studio <onboarding@resend.dev>";
+
+function getApiKey() {
+  return process.env["RESEND_API_KEY"]?.trim();
+}
+
+async function sendEmail(subject: string, html: string) {
+  const apiKey = getApiKey();
+
+  if (!apiKey) {
+    console.error("RESEND_API_KEY não configurada neste ambiente.");
+    return Response.json(
+      { error: "Serviço de e-mail não configurado." },
+      { status: 500 }
+    );
+  }
+
+  const resend = new Resend(apiKey);
+  const { data, error } = await resend.emails.send({
+    from: FROM,
+    to: TO,
+    subject,
+    html,
+  });
+
+  if (error || !data?.id) {
+    console.error("Erro Resend:", error ?? "Resend não retornou id do e-mail.");
+    return Response.json(
+      { error: error?.message || "Não foi possível enviar o e-mail." },
+      { status: 500 }
+    );
+  }
+
+  console.info("E-mail enviado:", data.id);
+  return Response.json({ success: true, id: data.id });
+}
+
 export async function POST(request: Request) {
   try {
-    if (!process.env.RESEND_API_KEY) {
-      console.error("RESEND_API_KEY não configurada neste ambiente.");
-
-      return Response.json(
-        { error: "Serviço de e-mail não configurado." },
-        { status: 500 }
-      );
-    }
-
-    const resend = new Resend(process.env.RESEND_API_KEY);
     const body = await request.json();
     const { type } = body;
 
@@ -25,28 +56,15 @@ export async function POST(request: Request) {
         );
       }
 
-      const { error } = await resend.emails.send({
-        from: "onboarding@resend.dev",
-        to: "contatopedrowebstudio@gmail.com",
-        subject: "Novo contato — Pedro Web Studio",
-        html: `
+      return sendEmail(
+        "Novo contato — Pedro Web Studio",
+        `
           <h2>Novo contato pelo site</h2>
           <p><strong>Negócio:</strong> ${business}</p>
           <p><strong>O que precisa no site:</strong> ${goal}</p>
           <p><strong>Telefone:</strong> ${phone}</p>
-        `,
-      });
-
-      if (error) {
-        console.error("Erro Resend:", error);
-
-        return Response.json(
-          { error: "Não foi possível enviar o contato." },
-          { status: 500 }
-        );
-      }
-
-      return Response.json({ success: true });
+        `
+      );
     }
 
     if (type === "orcamento") {
@@ -73,16 +91,18 @@ export async function POST(request: Request) {
         );
       }
 
-      const { error } = await resend.emails.send({
-        from: "onboarding@resend.dev",
-        to: "contatopedrowebstudio@gmail.com",
-        subject: "Nova solicitação de orçamento — Pedro Web Studio",
-        html: `
+      const lista = Array.isArray(funcionalidades)
+        ? funcionalidades.join(", ")
+        : "";
+
+      return sendEmail(
+        "Nova solicitação de orçamento — Pedro Web Studio",
+        `
           <h2>Nova solicitação de orçamento</h2>
 
           <h3>Projeto</h3>
           <p><strong>Tipo:</strong> ${tipo}</p>
-          <p><strong>Funcionalidades:</strong> ${funcionalidades.join(", ")}</p>
+          <p><strong>Funcionalidades:</strong> ${lista}</p>
           <p><strong>Identidade visual:</strong> ${identidade}</p>
 
           <h3>Negócio</h3>
@@ -100,19 +120,8 @@ export async function POST(request: Request) {
           <p><strong>Nome:</strong> ${nomeContato}</p>
           <p><strong>E-mail:</strong> ${email}</p>
           <p><strong>WhatsApp:</strong> ${whatsapp}</p>
-        `,
-      });
-
-      if (error) {
-        console.error("Erro Resend:", error);
-
-        return Response.json(
-          { error: "Não foi possível enviar o orçamento." },
-          { status: 500 }
-        );
-      }
-
-      return Response.json({ success: true });
+        `
+      );
     }
 
     return Response.json(
