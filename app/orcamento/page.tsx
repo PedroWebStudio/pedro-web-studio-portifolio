@@ -103,6 +103,7 @@ function Textarea({ label, ...props }: React.TextareaHTMLAttributes<HTMLTextArea
 export default function OrcamentoPage() {
   const [step, setStep] = useState(1);
   const [done, setDone] = useState(false);
+  const [sending, setSending] = useState(false);
   const [form, setForm] = useState<FormData>(EMPTY);
   const [dir, setDir] = useState(1); // 1 = avançar, -1 = voltar
 
@@ -130,8 +131,36 @@ export default function OrcamentoPage() {
     return true;
   }
 
-  function handleSubmit() {
-    setDone(true);
+  async function handleSubmit() {
+    if (sending || !canAdvance()) return;
+
+    try {
+      setSending(true);
+
+      const response = await fetch("/api/email", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          type: "orcamento",
+          ...form,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || "Não foi possível enviar.");
+      }
+
+      setDone(true);
+    } catch (error) {
+      console.error("Erro ao enviar orçamento:", error);
+      alert("Não foi possível enviar sua solicitação. Tente novamente.");
+    } finally {
+      setSending(false);
+    }
   }
 
   function closeDone() {
@@ -367,17 +396,17 @@ export default function OrcamentoPage() {
             <motion.button
               type="button"
               onClick={handleSubmit}
-              disabled={!canAdvance()}
-              whileHover={canAdvance() ? { scale: 1.04 } : {}}
-              whileTap={canAdvance() ? { scale: 0.97 } : {}}
+              disabled={!canAdvance() || sending}
+              whileHover={canAdvance() && !sending ? { scale: 1.04 } : {}}
+              whileTap={canAdvance() && !sending ? { scale: 0.97 } : {}}
               className={`inline-flex h-11 items-center justify-center rounded-full px-8 text-sm font-semibold transition-all ${
-                canAdvance()
+                canAdvance() && !sending
                   ? "bg-[#D4AF37] text-black"
                   : "cursor-not-allowed bg-zinc-800 text-zinc-600"
               }`}
             >
-              Enviar solicitação
-              <ArrowRight className="ml-1.5 h-4 w-4" />
+              {sending ? "Enviando..." : "Enviar solicitação"}
+              {!sending && <ArrowRight className="ml-1.5 h-4 w-4" />}
             </motion.button>
           )}
         </div>
