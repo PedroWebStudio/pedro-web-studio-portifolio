@@ -8,7 +8,9 @@ import { ArrowLeft, ArrowRight } from "@/components/icons";
 // ─── tipos ────────────────────────────────────────────────────────────────────
 type FormData = {
   tipo: string;
+  tipoOutro: string;
   funcionalidades: string[];
+  funcionalidadesOutros: string;
   identidade: string;
   nome: string;
   empresa: string;
@@ -24,7 +26,9 @@ type FormData = {
 
 const EMPTY: FormData = {
   tipo: "",
+  tipoOutro: "",
   funcionalidades: [],
+  funcionalidadesOutros: "",
   identidade: "",
   nome: "",
   empresa: "",
@@ -39,7 +43,14 @@ const EMPTY: FormData = {
 };
 
 // ─── opções ───────────────────────────────────────────────────────────────────
-const TIPOS = ["Site institucional", "Landing Page", "Loja virtual", "Sistema / aplicação", "Outro"];
+const TIPOS = [
+  "Site institucional",
+  "Landing Page",
+  "Loja virtual",
+  "Criação de portfólio",
+  "Sistema / aplicação",
+  "Outro",
+];
 
 const FUNCIONALIDADES = [
   "Página inicial", "Sobre", "Serviços", "Portfólio", "Blog",
@@ -113,17 +124,31 @@ export default function OrcamentoPage() {
   }
 
   function toggleFunc(f: string) {
-    setForm((p) => ({
-      ...p,
-      funcionalidades: p.funcionalidades.includes(f)
+    setForm((p) => {
+      const selected = p.funcionalidades.includes(f);
+      const funcionalidades = selected
         ? p.funcionalidades.filter((x) => x !== f)
-        : [...p.funcionalidades, f],
-    }));
+        : [...p.funcionalidades, f];
+
+      return {
+        ...p,
+        funcionalidades,
+        funcionalidadesOutros: f === "Outros" && selected ? "" : p.funcionalidadesOutros,
+      };
+    });
   }
 
   function canAdvance() {
-    if (step === 1) return !!form.tipo;
-    if (step === 2) return form.funcionalidades.length > 0;
+    if (step === 1) {
+      if (!form.tipo) return false;
+      if (form.tipo === "Outro" && !form.tipoOutro.trim()) return false;
+      return true;
+    }
+    if (step === 2) {
+      if (form.funcionalidades.length === 0) return false;
+      if (form.funcionalidades.includes("Outros") && !form.funcionalidadesOutros.trim()) return false;
+      return true;
+    }
     if (step === 3) return !!form.identidade;
     if (step === 4) return !!form.nome && !!form.descricao;
     if (step === 5) return !!form.investimento;
@@ -256,11 +281,39 @@ export default function OrcamentoPage() {
                   </h2>
                   <div className="grid gap-3 sm:grid-cols-2">
                     {TIPOS.map((t) => (
-                      <OptionButton key={t} selected={form.tipo === t} onClick={() => setForm((p) => ({ ...p, tipo: t }))}>
+                      <OptionButton
+                        key={t}
+                        selected={form.tipo === t}
+                        onClick={() =>
+                          setForm((p) => ({
+                            ...p,
+                            tipo: t,
+                            tipoOutro: t === "Outro" ? p.tipoOutro : "",
+                          }))
+                        }
+                      >
                         {t}
                       </OptionButton>
                     ))}
                   </div>
+                  <AnimatePresence>
+                    {form.tipo === "Outro" && (
+                      <motion.div
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: "auto" }}
+                        exit={{ opacity: 0, height: 0 }}
+                        transition={{ duration: 0.2 }}
+                        className="overflow-hidden"
+                      >
+                        <Field
+                          label="Qual tipo de projeto?"
+                          placeholder="Descreva em poucas palavras..."
+                          value={form.tipoOutro}
+                          onChange={(e) => setForm((p) => ({ ...p, tipoOutro: e.target.value }))}
+                        />
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
                 </div>
               )}
 
@@ -281,6 +334,26 @@ export default function OrcamentoPage() {
                       </OptionButton>
                     ))}
                   </div>
+                  <AnimatePresence>
+                    {form.funcionalidades.includes("Outros") && (
+                      <motion.div
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: "auto" }}
+                        exit={{ opacity: 0, height: 0 }}
+                        transition={{ duration: 0.2 }}
+                        className="overflow-hidden"
+                      >
+                        <Field
+                          label="O que mais você precisa?"
+                          placeholder="Conte rapidamente..."
+                          value={form.funcionalidadesOutros}
+                          onChange={(e) =>
+                            setForm((p) => ({ ...p, funcionalidadesOutros: e.target.value }))
+                          }
+                        />
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
                 </div>
               )}
 
@@ -350,8 +423,19 @@ export default function OrcamentoPage() {
 
                   {/* Resumo */}
                   <div className="mt-6 rounded-xl border border-zinc-800 bg-zinc-900/40 p-5 text-sm text-zinc-400 space-y-1.5">
-                    <p><span className="text-zinc-600">Tipo:</span> {form.tipo}</p>
-                    <p><span className="text-zinc-600">Funcionalidades:</span> {form.funcionalidades.join(", ")}</p>
+                    <p>
+                      <span className="text-zinc-600">Tipo:</span>{" "}
+                      {form.tipo === "Outro" && form.tipoOutro
+                        ? `Outro — ${form.tipoOutro}`
+                        : form.tipo}
+                    </p>
+                    <p>
+                      <span className="text-zinc-600">Funcionalidades:</span>{" "}
+                      {form.funcionalidades.join(", ")}
+                      {form.funcionalidades.includes("Outros") && form.funcionalidadesOutros
+                        ? ` (${form.funcionalidadesOutros})`
+                        : ""}
+                    </p>
                     <p><span className="text-zinc-600">Identidade:</span> {form.identidade}</p>
                     <p><span className="text-zinc-600">Investimento:</span> {form.investimento}</p>
                   </div>

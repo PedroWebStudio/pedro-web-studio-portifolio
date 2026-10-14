@@ -70,7 +70,9 @@ export async function POST(request: Request) {
     if (type === "orcamento") {
       const {
         tipo,
+        tipoOutro,
         funcionalidades = [],
+        funcionalidadesOutros,
         identidade,
         nome,
         empresa,
@@ -91,9 +93,33 @@ export async function POST(request: Request) {
         );
       }
 
+      if (tipo === "Outro" && !tipoOutro?.trim()) {
+        return Response.json(
+          { error: "Descreva o tipo de projeto." },
+          { status: 400 }
+        );
+      }
+
+      if (
+        Array.isArray(funcionalidades) &&
+        funcionalidades.includes("Outros") &&
+        !funcionalidadesOutros?.trim()
+      ) {
+        return Response.json(
+          { error: "Descreva as funcionalidades em Outros." },
+          { status: 400 }
+        );
+      }
+
       const lista = Array.isArray(funcionalidades)
         ? funcionalidades.join(", ")
         : "";
+      const tipoLabel =
+        tipo === "Outro" && tipoOutro ? `Outro — ${tipoOutro}` : tipo;
+      const funcionalidadesLabel =
+        funcionalidades.includes("Outros") && funcionalidadesOutros
+          ? `${lista} (${funcionalidadesOutros})`
+          : lista;
 
       return sendEmail(
         "Nova solicitação de orçamento — Pedro Web Studio",
@@ -101,8 +127,8 @@ export async function POST(request: Request) {
           <h2>Nova solicitação de orçamento</h2>
 
           <h3>Projeto</h3>
-          <p><strong>Tipo:</strong> ${tipo}</p>
-          <p><strong>Funcionalidades:</strong> ${lista}</p>
+          <p><strong>Tipo:</strong> ${tipoLabel}</p>
+          <p><strong>Funcionalidades:</strong> ${funcionalidadesLabel}</p>
           <p><strong>Identidade visual:</strong> ${identidade}</p>
 
           <h3>Negócio</h3>
